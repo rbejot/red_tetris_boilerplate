@@ -4,3 +4,8 @@
 log
 tmp
 node_modules
+dist
+coverage
+build
+.nyc_output
+
