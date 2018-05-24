@@ -32,6 +32,7 @@ const initEngine = io => {
     loginfo("Socket connected: " + socket.id)
     socket.on('action', (action) => {
       if(action.type === 'server/ping'){
+        console.log(action)
         socket.emit('action', {type: 'pong'})
       }
     })

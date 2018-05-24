@@ -1,18 +1,27 @@
 import React from 'react'
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
+import * as Actions from '../actions/game'
+import * as Server from '../actions/server'
 
-
-const App = ({message}) => {
+const App = ({state, actions}) => {
   return (
-    <span>{message}</span>
+    <div>
+      <span>{state.message}</span>
+      <button onClick={() => actions.launch_game()}>Lancer la partie</button>
+      <button onClick={() => actions.ping()}>Ping server</button>
+    </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    message: state.message
-  }
-}
-export default connect(mapStateToProps, null)(App)
+const mapStateToProps = (state) => ({
+    state: state
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...Actions, ...Server }, dispatch),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 
