@@ -20,12 +20,6 @@ const initialState = {
   game: false
 }
 
-// const store = createStore(
-//   reducer,
-//   initialState,
-//   applyMiddleware(thunk, createLogger())
-// )
-
 const store =  applyMiddleware(socketIoMiddleware)(createStore)(
   reducer,
   initialState,
