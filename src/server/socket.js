@@ -14,13 +14,13 @@ export const initEngine = (io,loginfo) => {
         let numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0
         console.log('Room ' + room + ' now has ' + numClients + ' client(s)');
         if(numClients === 0){
-          socket.join()
+          socket.join(room)
           console.log('Client ID ' + socket.id + ' joined room ' + room);
           socket.emit('action', {type: 'create', room: room, id: socket.id})
           generate_tetri(socket.id)
         } else {
           socket.emit('action', {type: 'reject', room: room})
-          console.log('this room is full')
+          console.log('cant create room')
         }
       }
       if (action.type === 'server/join_room'){
