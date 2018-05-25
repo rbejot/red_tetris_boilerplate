@@ -1,5 +1,5 @@
 import { ALERT_POP } from '../actions/alert'
-import { GAME_LAUNCHED } from '../actions/game'
+import { GAME_LAUNCHED, CREATE_ROOM } from '../actions/game'
 
 const reducer = (state = {} , action) => {
   switch(action.type){
