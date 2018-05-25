@@ -39,6 +39,7 @@
     "eslint-plugin-react": "^5.2.2",
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
+    "react-router-dom": "^4.2.2",
     "redux-socket.io": "^1.4.0",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.6.1",
