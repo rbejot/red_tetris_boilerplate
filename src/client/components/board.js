@@ -6,6 +6,9 @@ const Board = (props) => {
     return (
       <div>
         {/* The game is {playable ? "" : "not"} playable */}
+        {/* SI JOIN FULL -> GAME ALREADY STARTED et BOUTON VERS HOME */}
+        {/* SI JOIN POSSIBLE -> master = false  */}
+        {/* SI PARTI LANCE -> gaming = true */}
         {props.match.params.room}
         {props.match.params.player}
       </div>
