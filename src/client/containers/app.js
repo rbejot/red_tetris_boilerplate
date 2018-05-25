@@ -4,15 +4,18 @@ import { connect } from 'react-redux'
 import * as Actions from '../actions/game'
 import * as Server from '../actions/server'
 import Board from '../components/board'
+import { BrowserRouter } from 'react-router-dom'
 
 const App = ({state, actions}) => {
   return (
+    <BrowserRouter>
     <div>
       <span>{state.message}</span>
       {state.game ? "" : <button onClick={() => actions.launch_game()}>Lancer la partie</button>}
-      <button onClick={() => actions.ping()}>Ping server</button>
+      <button onClick={() => actions.create_room()}>Create room 'server/create_room'</button>
       <Board playable={state.game}/>
     </div>
+    </BrowserRouter>
   )
 }
 
