@@ -14,18 +14,18 @@ export const initEngine = (io,loginfo) => {
         let numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0
         console.log('Room ' + room + ' now has ' + numClients + ' client(s)');
         if(numClients === 0){
-          console.log('room ====', io.sockets.adapter.rooms)
+          socket.join(room)
           console.log('Client ID ' + socket.id + ' joined room ' + room);
-          socket.emit('create', room, socket.id)
+          socket.emit('action', {type: 'create', room: 'room', id: socket.id})
           generate_tetri(socket.id)
       } else if(numClients === 1){
           console.log('Client ID ' + socket.id + ' joined room ' + room);
           io.sockets.in(room).emit('join', room)
           socket.join(room)
-          socket.emit('joined', room, socket.id)
+          socket.emit('action', {type: 'joined', room: 'room', id: socket.id})
           io.sockets.in(room).emit('ready');
       } else {
-        socket.emit('full', room)
+        socket.emit('action', {type: 'full', room: 'room'})
         console.log('this room is full')
       }
       }
