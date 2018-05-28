@@ -14,16 +14,8 @@ export const initEngine = (io,loginfo) => {
         if(numClients === 0){
           socket.join(room)
           socket.emit('action', {type: 'create', room: room, id: socket.id})
-          let master = new Player(socket, room, numClients)
+          let master = new Player(action.player, room, numClients)
           master.isPlayerMaster()
-          console.log('ROOOOM', io.sockets.adapter.rooms[room])
-        } else if(numClients === 1){
-          console.log('Client ID ' + socket.id + ' joined room ' + room);
-          socket.join(room)
-          socket.emit('action', {type: 'joined', room: room, id: socket.id})
-          io.sockets.in(room).emit('ready');
-          let user = new Player(socket, room, numClients)
-          user.isPlayerMaster()
         } else {
           socket.emit('action', {type: 'reject', room: room})
           console.log('cannot create room, already exists')
@@ -34,31 +26,45 @@ export const initEngine = (io,loginfo) => {
         let clientsInRoom = io.sockets.adapter.rooms[room]
         let numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0
         if(numClients === 1){
-            console.log('Client ID ' + socket.id + ' joined room ' + room);
-            socket.join(room)
-            socket.emit('action', {type: 'joined', room: room, id: socket.id})
-            io.sockets.in(room).emit('ready');
+          console.log('Client ID ' + socket.id + ' joined room ' + room);
+          socket.join(room)
+          socket.emit('action', {type: 'joined', room: room, id: socket.id})
+          io.sockets.in(room).emit('ready');
+          let player = new Player(action.player, room, numClients)
+          player.isPlayerMaster()
         } else{
           socket.emit('action', {type: 'reject', room: room})
           console.log('this room is full')
         }
       }
+      if (action.type === 'server/get_listRoom'){
+        listRooms(io)
+      }
     })
   })
 }
 
+const listRooms = (io) => {
+  var Rooms = []
+  for( var room in io.sockets.adapter.rooms ) {
+    if (io.sockets.adapter.rooms[room].length === 1 && room.length === 5)
+      Rooms.push(room);
+  }
+  console.log('ROOOOM', Rooms)
+}
+
 class Player {
-  constructor(socket, room, isMaster){
-    this.user = socket.id
-    this.roomNb = room
+  constructor(username, room, isMaster){
+    this.user = username
+    this.room = room
     this.isMaster = isMaster
   }
 
   isPlayerMaster(){
     if (this.isMaster === 0) {
-      console.log("player is master")
+      console.log('player ' + this.user.toUpperCase() + ' is master of room: ' + this.room)
     } else {
-      console.log("player join room")
+      console.log('player ' + this.user.toUpperCase() + ' join room: ' + this.room)
     }
   }
 }
