@@ -9,7 +9,7 @@ const reducer = (state = {} , action) => {
       return {
         player: action.player
       }
-    case 'reject':
+    case 'not_created':
       return { party: false }
     case 'create':
       return {
@@ -20,6 +20,27 @@ const reducer = (state = {} , action) => {
         id: action.id,
         room: action.room
       }
+    case 'roomList':
+      return {
+        ...state,
+        rooms: action.rooms
+      }
+    case 'update_list':
+      return {
+        ...state,
+        rooms: action.rooms
+      }
+    case 'joined':
+      return {
+        ...state,
+        room: action.room,
+        id: action.id,
+        party: true,
+        master: false,
+        full: true
+      }
+    case 'reject':
+      return state
     default: 
       return state
   }

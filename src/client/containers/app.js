@@ -11,13 +11,12 @@ import { HashRouter, Route, Redirect, Switch } from 'react-router-dom'
 // GET_ROOM pour creer liste de room possible
 
 const App = ({state, actions}) => {
-  const player = "toto"
   return (
     <HashRouter hashType="noslash">
     <div>
       <Switch>
         <Route exact path="/" render={(props) => (
-          <Home props={props} actions={actions} state={state} player={player}/>
+          <Home props={props} actions={actions} state={state}/>
         )}/>
         <Route exact path="/:room[:player]" render={(props) => (
           state.party ? (

@@ -14,10 +14,13 @@ export const initEngine = (io,loginfo) => {
         if(numClients === 0){
           socket.join(room)
           socket.emit('action', {type: 'create', room: room, id: socket.id})
+          //j'envois à tout le monde la nouvelle liste de rooms
+          //TODO: mettre à jour la liste quand qqn quitte une room
+          socket.broadcast.emit('action', {type: 'update_list', rooms: listRooms(io)})
           let master = new Player(action.player, room, numClients)
           master.isPlayerMaster()
         } else {
-          socket.emit('action', {type: 'reject', room: room})
+          socket.emit('action', {type: 'not_created', room: room})
           console.log('cannot create room, already exists')
         }
       }
@@ -25,6 +28,10 @@ export const initEngine = (io,loginfo) => {
         let room = action.room
         let clientsInRoom = io.sockets.adapter.rooms[room]
         let numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0
+        //Quand qqn cherche aà rejoindre une partie MAJ de la liste des rooms
+        //Je supprime la room de la liste, si qqn essaye de la rejoindre soit elle devient pleine
+        //soit elle l'est déjà
+        socket.broadcast.emit('action', {type: 'update_list', rooms: delete_from_list(listRooms(io), room)})
         if(numClients === 1){
           console.log('Client ID ' + socket.id + ' joined room ' + room);
           socket.join(room)
@@ -38,11 +45,18 @@ export const initEngine = (io,loginfo) => {
         }
       }
       if (action.type === 'server/get_listRoom'){
-        rooms = listRooms(io)
+        let rooms = listRooms(io)
         socket.emit('action', {type: 'roomList', rooms: rooms})
       }
     })
   })
+}
+
+const delete_from_list = (rooms, the_room) => {
+  let index = rooms.indexOf(the_room)
+  if (index > -1)
+    return rooms.splice(index, 1)
+  return rooms
 }
 
 const listRooms = (io) => {
@@ -52,6 +66,7 @@ const listRooms = (io) => {
       Rooms.push(room);
   }
   console.log('ROOOOM', Rooms)
+  return Rooms
 }
 
 class Player {
