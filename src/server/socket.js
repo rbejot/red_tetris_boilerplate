@@ -38,7 +38,8 @@ export const initEngine = (io,loginfo) => {
         }
       }
       if (action.type === 'server/get_listRoom'){
-        listRooms(io)
+        rooms = listRooms(io)
+        socket.emit('action', {type: 'roomList', rooms: rooms})
       }
     })
   })
