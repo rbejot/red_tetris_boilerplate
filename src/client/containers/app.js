@@ -5,25 +5,17 @@ import * as Actions from '../actions/game'
 import * as Server from '../actions/server'
 import Board from '../components/board'
 import Home from '../components/home'
-import { HashRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
+import { HashRouter, Route, Redirect } from 'react-router-dom'
 
 // GET_ROOM pour creer liste de room possible
 
 const App = ({state, actions}) => {
-  const generate_room = () => {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 5; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    return text;
-  }
-  const room = generate_room()
   const player = "toto"
   return (
     <HashRouter hashType="noslash">
     <div>
       <Route exact path="/" render={(props) => (
-        <Home props={props} actions={actions} state={state} room={room} player={player}/>
+        <Home props={props} actions={actions} state={state} player={player}/>
       )}/>
       <Route exact path="/:room[:player]" render={(props) => (
         state.party ? (
