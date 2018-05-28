@@ -41,7 +41,6 @@ export function create(params){
         loginfo(`Engine stopped.`)
         cb()
       }
-
       initEngine(io, loginfo)
       resolve({stop})
     })
