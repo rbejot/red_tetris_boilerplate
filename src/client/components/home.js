@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 const Home = ({props, actions, state, player}) => {
-    // console.log(props)
+    console.log(props)
     // console.log(actions)
     // console.log(state)
     const generate_room = () => {
@@ -13,12 +13,19 @@ const Home = ({props, actions, state, player}) => {
       return text;
     }
     const room = generate_room()
-    console.log(room)
     return (
       <div>
-        <input id="userName" type="text"/>
-        {state.room ? <Redirect to={`/${state.room}[${player}]`}/> : "" }
-        <button onClick={() => actions.create_room(room, player)}>Create room</button>
+        {state.player ? <button onClick={() => actions.create_room(room, state.player)}>Create room</button> : (
+          <div>
+            {/* <iframe width="0" height="0" name="form_frame"></iframe> */}
+            <form onSubmit={() => actions.add_username("titi")}>
+              <input required="true" type="text" name="username"></input>
+              <input type="submit"></input>
+            </form>
+            {/* <button onClick={() => actions.add_username("tata")}>add username</button> */}
+          </div>
+        )}
+        {state.room ? <Redirect to={`/${state.room}[${state.player}]`}/> : "" }
       </div>
     )
 }
