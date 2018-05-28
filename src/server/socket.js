@@ -13,12 +13,20 @@ export const initEngine = (io,loginfo) => {
         console.log('Room ' + room + ' now has ' + numClients + ' client(s)');
         if(numClients === 0){
           socket.join(room)
-          console.log('Client ID ' + socket.id + ' joined room ' + room);
           socket.emit('action', {type: 'create', room: room, id: socket.id})
-          generate_tetri(socket.id)
+          let master = new Player(socket, room, numClients)
+          master.isPlayerMaster()
+          console.log('ROOOOM', io.sockets.adapter.rooms[room])
+        } else if(numClients === 1){
+          console.log('Client ID ' + socket.id + ' joined room ' + room);
+          socket.join(room)
+          socket.emit('action', {type: 'joined', room: room, id: socket.id})
+          io.sockets.in(room).emit('ready');
+          let user = new Player(socket, room, numClients)
+          user.isPlayerMaster()
         } else {
           socket.emit('action', {type: 'reject', room: room})
-          console.log('cant create room')
+          console.log('cannot create room, already exists')
         }
       }
       if (action.type === 'server/join_room'){
@@ -30,7 +38,7 @@ export const initEngine = (io,loginfo) => {
             socket.join(room)
             socket.emit('action', {type: 'joined', room: room, id: socket.id})
             io.sockets.in(room).emit('ready');
-        } else {
+        } else{
           socket.emit('action', {type: 'reject', room: room})
           console.log('this room is full')
         }
@@ -39,8 +47,18 @@ export const initEngine = (io,loginfo) => {
   })
 }
 
+class Player {
+  constructor(socket, room, isMaster){
+    this.user = socket.id
+    this.roomNb = room
+    this.isMaster = isMaster
+  }
 
-
-const generate_tetri = id => {
-  console.log(id)
+  isPlayerMaster(){
+    if (this.isMaster === 0) {
+      console.log("player is master")
+    } else {
+      console.log("player join room")
+    }
+  }
 }
