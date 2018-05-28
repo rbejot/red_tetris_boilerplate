@@ -3,7 +3,7 @@ export const ping = () => ({
   data: 'Ping!'
 })
 
-export const create_room = () => ({
-  type: 'server/create_room',
-  room: 'd435g'
-})
+// export const create_room = () => ({
+//   type: 'server/create_room',
+//   room: 'd435g'
+// })
