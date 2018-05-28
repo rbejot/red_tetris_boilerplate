@@ -4,15 +4,16 @@ import { connect } from 'react-redux'
 import * as Actions from '../actions/game'
 import * as Server from '../actions/server'
 import Board from '../components/board'
-import { HashRouter, Route, Link } from 'react-router-dom'
+import Home from '../components/home'
+import { HashRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
 
 // GET_ROOM pour creer liste de room possible
 
 const App = ({state, actions}) => {
   const generate_room = () => {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < 5; i++)
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < 5; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
   }
@@ -21,10 +22,16 @@ const App = ({state, actions}) => {
   return (
     <HashRouter hashType="noslash">
     <div>
-      {/* ENVOYER actions POUR DISPATCH join_server DANS board */}
-      <Route path="/:room[:player]" component={Board}/>
-      <input id="userName" type="text"/>
-      {state.party ? "" : <button><Link to={`/${room}[${player}]`} onClick={() => actions.create_room(room, player)}>Create room</Link></button>}
+      <Route exact path="/" render={(props) => (
+        <Home props={props} actions={actions} state={state} room={room} player={player}/>
+      )}/>
+      <Route exact path="/:room[:player]" render={(props) => (
+        state.party ? (
+          <Board props={props} actions={actions} state={state}/> 
+        ) : (
+          <Redirect to="/"/>
+        )
+      )}/>
     </div>
     </HashRouter>
   )

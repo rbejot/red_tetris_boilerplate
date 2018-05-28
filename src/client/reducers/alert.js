@@ -11,7 +11,9 @@ const reducer = (state = {} , action) => {
       return { 
         party: true,
         master: true,
-        id: action.id
+        full: false,
+        id: action.id,
+        room: action.room
       }
     default: 
       return state
