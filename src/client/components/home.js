@@ -17,8 +17,8 @@ const Home = ({props, actions, state, player}) => {
       <div>
         {state.player ? <button onClick={() => actions.create_room(room, state.player)}>Create room</button> : (
           <div>
-            <iframe width="0" height="0" name="form_frame"></iframe>
-            <form target="form_frame" onSubmit={() => actions.add_username("titi")}>
+            {/* <iframe width="0" height="0" name="form_frame"></iframe> */}
+            <form onSubmit={() => actions.add_username("titi")}>
               <input required="true" type="text" name="username"></input>
               <input type="submit"></input>
             </form>
