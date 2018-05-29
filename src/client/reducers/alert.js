@@ -4,7 +4,7 @@ import { CREATE_ROOM, ADD_USERNAME } from '../actions/game'
 const reducer = (state = {} , action) => {
   switch(action.type){
     case ALERT_POP:
-      return { message: action.message }
+      return state
     case 'good_username':
       return {
         ...state,

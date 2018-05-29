@@ -2,9 +2,6 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 const Board = ({props, actions, state}) => {
-    console.log(props)
-    console.log(actions)
-    console.log(state)
     return (
       <div>
         {/* {state.message ? "" : <Redirect to ="/"/>} */}
