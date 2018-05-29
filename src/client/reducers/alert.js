@@ -1,10 +1,15 @@
 import { ALERT_POP } from '../actions/alert'
-import { CREATE_ROOM, ADD_USERNAME } from '../actions/game'
+import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME } from '../actions/game'
 
 const reducer = (state = {} , action) => {
   switch(action.type){
     case ALERT_POP:
       return state
+    case ERR_USERNAME:
+      return {
+        ...state,
+        error_username: "Pseudo non valide"
+      }
     case 'good_username':
       return {
         ...state,
@@ -14,7 +19,7 @@ const reducer = (state = {} , action) => {
     case 'username_not_available':
       return {
         ...state,
-        error_username: true
+        error_username: "Pseudo déjà utilisé"
       }
     case 'not_created':
       return { party: false }
@@ -52,7 +57,8 @@ const reducer = (state = {} , action) => {
     case 'p2_joined':
       return {
         ...state,
-        p2: action.player_2
+        p2: action.player_2,
+        full: true
       }
     case 'reject':
       return {

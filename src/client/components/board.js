@@ -11,8 +11,9 @@ const Board = ({props, actions, state}) => {
         ) : (
           <p>Player_2: {state.master_name}[master]</p>
         )}
-        <p>Master : {state.master.toString()}</p>
+        <p>Master: {state.master.toString()}</p>
         <p>Start: {state.start.toString()}</p>
+        <p>Full: {state.full.toString()}</p>
         <div>
         </div>
       </div>

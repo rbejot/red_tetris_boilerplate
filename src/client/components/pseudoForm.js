@@ -1,8 +1,9 @@
 import React from 'react'
 import { Form, Text } from 'react-form'
+import isAlphanumeric from 'validator/lib/isAlphanumeric'
 
 const PseudoForm = ({actions}) => (
-  <Form onSubmit={values => actions.add_username(values.Pseudo)} render={({
+  <Form onSubmit={values => isAlphanumeric(values.Pseudo) ? actions.add_username(values.Pseudo) : actions.err_username()} render={({
     submitForm
   }) => (
     <form onSubmit={submitForm}>
