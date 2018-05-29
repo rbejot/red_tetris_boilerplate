@@ -7,10 +7,13 @@ const reducer = (state = {} , action) => {
       return { message: action.message }
     case 'good_username':
       return {
-        player: action.player
+        ...state,
+        player: action.player,
+        error_username: false
       }
     case 'username_not_available':
       return {
+        ...state,
         error_username: true
       }
     case 'not_created':
