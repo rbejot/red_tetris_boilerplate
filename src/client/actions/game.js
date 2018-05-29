@@ -18,8 +18,9 @@ export const get_list_room = () => ({
   type: GET_LIST_ROOM
 })
 
-export const join_room = (room, player) => ({
+export const join_room = (room, player, master) => ({
   type: JOIN_ROOM,
   room: room,
-  player: player
+  player: player,
+  master: master
 })

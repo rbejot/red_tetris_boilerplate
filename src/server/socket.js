@@ -1,5 +1,6 @@
-var globalUsers = []
-var globalMaster = {}
+var ALL_USERS = []
+var USERS_INFO = {}
+var ROOMS_INFO = {}
 
 export const initEngine = (io,loginfo) => {
   io.on('connection', function(socket){
@@ -16,14 +17,13 @@ export const initEngine = (io,loginfo) => {
           joinRoom(action, io, socket)
           break
         case 'server/get_listRoom':
-          //let rooms = listRooms(io)
-          socket.emit('action', {type: 'roomList', rooms: globalMaster})
+          socket.emit('action', {type: 'roomList', rooms: ROOMS_INFO})
           break
         case 'server/add_username':
           var user = action.player
           if (checkUsername(user) === true) {
             socket.emit('action', {type: 'good_username', player: user})
-            globalUsers.push(user)
+            ALL_USERS.push(user)
           } else {
             socket.emit('action', {type: 'username_not_available'})
           }
@@ -36,6 +36,9 @@ export const initEngine = (io,loginfo) => {
           break;
       }
     })
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
+    });
   })
 }
 
@@ -53,12 +56,13 @@ const joinRoom = (action, io, socket) => {
   //soit elle l'est déjà
   //Send name of player 2 to player master
   socket.to(room).emit('action', {type: 'p2_joined', player_2: action.player})
-  delete globalMaster[room]
-  socket.broadcast.emit('action', {type: 'update_list', rooms: globalMaster})
+  updateUsersInfo(socket.id, action.player, room)
+  updateRoomsInfo(room, action.player, false)
+  socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
   if(numClients === 1){
     //console.log('Client ID ' + socket.id + ' joined room ' + room);
     socket.join(room)
-    socket.emit('action', {type: 'joined', room: room, id: socket.id})
+    socket.emit('action', {type: 'joined', room: room, id: socket.id, master: action.master})
     io.sockets.in(room).emit('ready');
     let player = new Player(action.player, room, numClients)
     player.isPlayerMaster()
@@ -78,11 +82,8 @@ const createRoom = (action, io, socket) => {
     socket.emit('action', {type: 'create', room: room, id: socket.id})
     //j'envois à tout le monde la nouvelle liste de rooms
     //TODO: mettre à jour la liste quand qqn quitte une room
-    var roomNB = room
-    var obj = {}
-    obj[roomNB] = action.player
-    globalMaster = Object.assign(globalMaster, obj)
-    console.log("global master", globalMaster)
+    updateUsersInfo(socket.id, action.player, room)
+    updateRoomsInfo(room, action.player, true)
     socket.broadcast.emit('action', {type: 'update_list', rooms: listRooms(io)})
     let master = new Player(action.player, room, numClients)
     master.isPlayerMaster()
@@ -92,13 +93,29 @@ const createRoom = (action, io, socket) => {
   }
 }
 
-const delete_from_list = (rooms, the_room) => {
-  let index = rooms.indexOf(the_room)
-  if (index > -1) {
-    rooms.splice(index, 1)
-    delete globalMaster[room]
+const updateRoomsInfo = (room, username, isMaster) => {
+  var roomNB = room
+  var obj = {}
+  if (isMaster === true) {
+    var master = username
+    var player_2 = ""
+    var isFull = false
+  } else {
+    var master = ""
+    var player_2 = username
+    var isFull = true
   }
-  return globalMaster
+  obj[roomNB] = {master: master, player_2: player_2, isFull: isFull}
+  ROOMS_INFO = Object.assign(ROOMS_INFO, obj)
+  console.log("ROOMS_INFO", ROOMS_INFO);
+}
+
+const updateUsersInfo = (id, username, room) => {
+  var socket = id
+  var obj = {}
+  obj[socket] = {username: username, roomNB: room}
+  USERS_INFO = Object.assign(USERS_INFO, obj)
+  console.log("user info", USERS_INFO)
 }
 
 const listRooms = (io) => {
@@ -112,8 +129,8 @@ const listRooms = (io) => {
 
 
 const checkUsername = username => {
-  if (globalUsers.length > 0) {
-    let index = globalUsers.indexOf(username)
+  if (ALL_USERS.length > 0) {
+    let index = ALL_USERS.indexOf(username)
     return index > -1 ? false : true
   }
   return true
