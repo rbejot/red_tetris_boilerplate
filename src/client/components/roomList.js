@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const RoomList = ({actions, state}) => {
   console.log(state.rooms)
   const listItems = Object.keys(state.rooms).map((room, index) =>
-    <li key={room}><Link onClick={() => actions.join_room(room, state.player)} to={`:${room}[:${state.player}]`}>{room}</Link> {state.rooms[room]} </li>
+    <li key={room}><Link onClick={() => actions.join_room(room, state.player, state.rooms[room])} to={`:${room}[:${state.player}]`}>{room}</Link> {state.rooms[room]} </li>
   )
   return (
     <div>
