@@ -53,7 +53,8 @@ const joinRoom = (action, io, socket) => {
   //soit elle l'est déjà
   //Send name of player 2 to player master
   socket.to(room).emit('action', {type: 'p2_joined', player_2: action.player})
-  socket.broadcast.emit('action', {type: 'update_list', rooms: delete_from_list(listRooms(io), room)})
+  delete globalMaster[room]
+  socket.broadcast.emit('action', {type: 'update_list', rooms: globalMaster})
   if(numClients === 1){
     //console.log('Client ID ' + socket.id + ' joined room ' + room);
     socket.join(room)
