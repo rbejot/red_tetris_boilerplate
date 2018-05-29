@@ -16,6 +16,8 @@ const Board = ({props, actions, state}) => {
         <p>Player_2: {state.p2 ? state.p2 : ""}</p>
         <p>Master : {state.master.toString()}</p>
         <p>Start: {state.start.toString()}</p>
+        <div>
+        </div>
       </div>
     )
 }

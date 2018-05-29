@@ -5,9 +5,13 @@ const reducer = (state = {} , action) => {
   switch(action.type){
     case ALERT_POP:
       return { message: action.message }
-    case ADD_USERNAME:
+    case 'good_username':
       return {
         player: action.player
+      }
+    case 'username_not_available':
+      return {
+        error_username: true
       }
     case 'not_created':
       return { party: false }
