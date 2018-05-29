@@ -17,7 +17,6 @@ export const initEngine = (io,loginfo) => {
           joinRoom(action, io, socket)
           break
         case 'server/get_listRoom':
-          //let rooms = listRooms(io)
           socket.emit('action', {type: 'roomList', rooms: ROOMS_INFO})
           break
         case 'server/add_username':
@@ -57,7 +56,8 @@ const joinRoom = (action, io, socket) => {
   //soit elle l'est déjà
   //Send name of player 2 to player master
   socket.to(room).emit('action', {type: 'p2_joined', player_2: action.player})
-  delete ROOMS_INFO[room]
+  updateUsersInfo(socket.id, action.player, room)
+  updateRoomsInfo(room, action.player, false)
   socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
   if(numClients === 1){
     //console.log('Client ID ' + socket.id + ' joined room ' + room);
@@ -82,11 +82,8 @@ const createRoom = (action, io, socket) => {
     socket.emit('action', {type: 'create', room: room, id: socket.id})
     //j'envois à tout le monde la nouvelle liste de rooms
     //TODO: mettre à jour la liste quand qqn quitte une room
-    var roomNB = room
-    var obj = {}
-    obj[roomNB] = action.player
-    ROOMS_INFO = Object.assign(ROOMS_INFO, obj)
-    console.log("global master", ROOMS_INFO)
+    updateUsersInfo(socket.id, action.player, room)
+    updateRoomsInfo(room, action.player, true)
     socket.broadcast.emit('action', {type: 'update_list', rooms: listRooms(io)})
     let master = new Player(action.player, room, numClients)
     master.isPlayerMaster()
@@ -96,13 +93,29 @@ const createRoom = (action, io, socket) => {
   }
 }
 
-const delete_from_list = (rooms, the_room) => {
-  let index = rooms.indexOf(the_room)
-  if (index > -1) {
-    rooms.splice(index, 1)
-    delete ROOMS_INFO[room]
+const updateRoomsInfo = (room, username, isMaster) => {
+  var roomNB = room
+  var obj = {}
+  if (isMaster === true) {
+    var master = username
+    var player_2 = ""
+    var isFull = false
+  } else {
+    var master = ""
+    var player_2 = username
+    var isFull = true
   }
-  return ROOMS_INFO
+  obj[roomNB] = {master: master, player_2: player_2, isFull: isFull}
+  ROOMS_INFO = Object.assign(ROOMS_INFO, obj)
+  console.log("ROOMS_INFO", ROOMS_INFO);
+}
+
+const updateUsersInfo = (id, username, room) => {
+  var socket = id
+  var obj = {}
+  obj[socket] = {username: username, roomNB: room}
+  USERS_INFO = Object.assign(USERS_INFO, obj)
+  console.log("user info", USERS_INFO)
 }
 
 const listRooms = (io) => {
