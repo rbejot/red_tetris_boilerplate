@@ -8,14 +8,11 @@ class Piece {
 }
 
 class Game {
-  constructor(room, master,){
-    this.room = room
-    this.matser = matser
+  constructor(){
+
   }
 
   launchGame(){
-    console.log('game as starder on room :' + this.room)
-    console.log('players :' + this.master)
   }
 
   nextPiece(){
