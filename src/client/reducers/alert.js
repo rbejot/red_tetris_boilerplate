@@ -18,7 +18,8 @@ const reducer = (state = {} , action) => {
         master: true,
         full: false,
         id: action.id,
-        room: action.room
+        room: action.room,
+        start: false
       }
     case 'roomList':
       return {
@@ -37,10 +38,19 @@ const reducer = (state = {} , action) => {
         id: action.id,
         party: true,
         master: false,
-        full: true
+        full: true,
+        start: false
+      }
+    case 'p2_joined':
+      return {
+        ...state,
+        p2: action.player_2
       }
     case 'reject':
-      return state
+      return {
+        ...state,
+        reject: true
+      }
     default: 
       return state
   }
