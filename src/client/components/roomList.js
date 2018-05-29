@@ -9,6 +9,7 @@ const RoomList = ({actions, state}) => {
   return (
     <div>
       {state.rooms.length > 0 ? "Ou, rejoindre une room" : ""}
+      {state.reject ? "Cette room est pleine" : ""}
       <ul>{listItems}</ul>
     </div>
   )

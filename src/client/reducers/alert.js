@@ -5,9 +5,16 @@ const reducer = (state = {} , action) => {
   switch(action.type){
     case ALERT_POP:
       return { message: action.message }
-    case ADD_USERNAME:
+    case 'good_username':
       return {
-        player: action.player
+        ...state,
+        player: action.player,
+        error_username: false
+      }
+    case 'username_not_available':
+      return {
+        ...state,
+        error_username: true
       }
     case 'not_created':
       return { party: false }
@@ -18,7 +25,8 @@ const reducer = (state = {} , action) => {
         master: true,
         full: false,
         id: action.id,
-        room: action.room
+        room: action.room,
+        start: false
       }
     case 'roomList':
       return {
@@ -37,10 +45,19 @@ const reducer = (state = {} , action) => {
         id: action.id,
         party: true,
         master: false,
-        full: true
+        full: true,
+        start: false
+      }
+    case 'p2_joined':
+      return {
+        ...state,
+        p2: action.player_2
       }
     case 'reject':
-      return state
+      return {
+        ...state,
+        reject: true
+      }
     default: 
       return state
   }

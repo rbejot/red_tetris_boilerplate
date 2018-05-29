@@ -1,5 +1,5 @@
 export const CREATE_ROOM = 'server/create_room'
-export const ADD_USERNAME = 'add_username'
+export const ADD_USERNAME = 'server/add_username'
 export const GET_LIST_ROOM = 'server/get_listRoom'
 export const JOIN_ROOM = 'server/join_room'
 

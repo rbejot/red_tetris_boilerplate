@@ -10,13 +10,14 @@ const Board = ({props, actions, state}) => {
         {/* {state.message ? "" : <Redirect to ="/"/>} */}
 
         {/* The game is {playable ? "" : "not"} playable */}
-        {/* SI JOIN FULL -> GAME ALREADY STARTED et BOUTON VERS HOME */}
-        
-        {/* SI JOIN POSSIBLE -> master = false  */}
-        {/* SI PARTI LANCE -> gaming = true */}
         {/* SI gaming = true -> GAME ALREADY STARTED et BOUTON VERS HOME*/}
-        {props.match.params.room}
-        {props.match.params.player}
+        <p>ROOM: {props.match.params.room}</p>
+        <p>PLAYER : {props.match.params.player}</p>
+        <p>Player_2: {state.p2 ? state.p2 : ""}</p>
+        <p>Master : {state.master.toString()}</p>
+        <p>Start: {state.start.toString()}</p>
+        <div>
+        </div>
       </div>
     )
 }
