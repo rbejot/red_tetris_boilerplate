@@ -84,7 +84,7 @@ const createRoom = (action, io, socket) => {
     //TODO: mettre à jour la liste quand qqn quitte une room
     updateUsersInfo(socket.id, action.player, room)
     updateRoomsInfo(room, action.player, true)
-    socket.broadcast.emit('action', {type: 'update_list', rooms: listRooms(io)})
+    socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     let master = new Player(action.player, room, numClients)
     master.isPlayerMaster()
   } else {

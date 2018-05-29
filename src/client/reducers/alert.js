@@ -57,7 +57,8 @@ const reducer = (state = {} , action) => {
     case 'p2_joined':
       return {
         ...state,
-        p2: action.player_2
+        p2: action.player_2,
+        full: true
       }
     case 'reject':
       return {
