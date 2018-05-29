@@ -1,5 +1,6 @@
-var globalUsers = []
-var globalMaster = {}
+var ALL_USERS = []
+var USERS_INFO = {}
+var ROOMS_INFO = {}
 
 export const initEngine = (io,loginfo) => {
   io.on('connection', function(socket){
@@ -17,13 +18,13 @@ export const initEngine = (io,loginfo) => {
           break
         case 'server/get_listRoom':
           //let rooms = listRooms(io)
-          socket.emit('action', {type: 'roomList', rooms: globalMaster})
+          socket.emit('action', {type: 'roomList', rooms: ROOMS_INFO})
           break
         case 'server/add_username':
           var user = action.player
           if (checkUsername(user) === true) {
             socket.emit('action', {type: 'good_username', player: user})
-            globalUsers.push(user)
+            ALL_USERS.push(user)
           } else {
             socket.emit('action', {type: 'username_not_available'})
           }
@@ -36,6 +37,9 @@ export const initEngine = (io,loginfo) => {
           break;
       }
     })
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
+    });
   })
 }
 
@@ -53,8 +57,8 @@ const joinRoom = (action, io, socket) => {
   //soit elle l'est déjà
   //Send name of player 2 to player master
   socket.to(room).emit('action', {type: 'p2_joined', player_2: action.player})
-  delete globalMaster[room]
-  socket.broadcast.emit('action', {type: 'update_list', rooms: globalMaster})
+  delete ROOMS_INFO[room]
+  socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
   if(numClients === 1){
     //console.log('Client ID ' + socket.id + ' joined room ' + room);
     socket.join(room)
@@ -81,8 +85,8 @@ const createRoom = (action, io, socket) => {
     var roomNB = room
     var obj = {}
     obj[roomNB] = action.player
-    globalMaster = Object.assign(globalMaster, obj)
-    console.log("global master", globalMaster)
+    ROOMS_INFO = Object.assign(ROOMS_INFO, obj)
+    console.log("global master", ROOMS_INFO)
     socket.broadcast.emit('action', {type: 'update_list', rooms: listRooms(io)})
     let master = new Player(action.player, room, numClients)
     master.isPlayerMaster()
@@ -96,9 +100,9 @@ const delete_from_list = (rooms, the_room) => {
   let index = rooms.indexOf(the_room)
   if (index > -1) {
     rooms.splice(index, 1)
-    delete globalMaster[room]
+    delete ROOMS_INFO[room]
   }
-  return globalMaster
+  return ROOMS_INFO
 }
 
 const listRooms = (io) => {
@@ -112,8 +116,8 @@ const listRooms = (io) => {
 
 
 const checkUsername = username => {
-  if (globalUsers.length > 0) {
-    let index = globalUsers.indexOf(username)
+  if (ALL_USERS.length > 0) {
+    let index = ALL_USERS.indexOf(username)
     return index > -1 ? false : true
   }
   return true
