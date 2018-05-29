@@ -45,6 +45,7 @@ const reducer = (state = {} , action) => {
         id: action.id,
         party: true,
         master: false,
+        master_name: action.master,
         full: true,
         start: false
       }

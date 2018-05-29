@@ -62,7 +62,7 @@ const joinRoom = (action, io, socket) => {
   if(numClients === 1){
     //console.log('Client ID ' + socket.id + ' joined room ' + room);
     socket.join(room)
-    socket.emit('action', {type: 'joined', room: room, id: socket.id})
+    socket.emit('action', {type: 'joined', room: room, id: socket.id, master: action.master})
     io.sockets.in(room).emit('ready');
     let player = new Player(action.player, room, numClients)
     player.isPlayerMaster()
