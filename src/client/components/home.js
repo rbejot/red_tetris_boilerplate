@@ -14,9 +14,8 @@ const Home = ({props, actions, state}) => {
     const room = generate_room()
     return (
       <div>
-        {/* <button onClick={() => actions.get_list_room()}>Get room list</button> */}
         {state.player ? (
-          <button onClick={() => actions.create_room(room, state.player)}>Create room</button>
+          <button onClick={() => actions.create_room(room, state.player)}>Créer une room</button>
         ) : (
           <PseudoForm actions={actions}/>
         )}

@@ -8,7 +8,7 @@ const RoomList = ({actions, state}) => {
   )
   return (
     <div>
-      Or join a Room
+      {state.rooms.length > 0 ? "Ou, rejoindre une room" : ""}
       <ul>{listItems}</ul>
     </div>
   )

@@ -7,7 +7,7 @@ const PseudoForm = ({actions}) => (
   }) => (
     <form onSubmit={submitForm}>
       <Text field="Pseudo" placeholder='Pseudo' required="true"/>
-      <button onClick={() => actions.get_list_room()} type="submit">Submit</button>
+      <button onClick={() => actions.get_list_room()} type="submit">Entrer</button>
     </form>
   )} />
 )

@@ -55,7 +55,7 @@ export const initEngine = (io,loginfo) => {
 const delete_from_list = (rooms, the_room) => {
   let index = rooms.indexOf(the_room)
   if (index > -1)
-    return rooms.splice(index, 1)
+    rooms.splice(index, 1)
   return rooms
 }
 
