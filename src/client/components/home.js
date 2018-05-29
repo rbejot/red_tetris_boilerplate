@@ -14,7 +14,7 @@ const Home = ({props, actions, state}) => {
     const room = generate_room()
     return (
       <div>
-        {state.error_username ? "Pseudo deja pris" : ""}
+        {state.error_username ? state.error_username : ""}
         {state.player ? (
           <button onClick={() => actions.create_room(room, state.player)}>Créer une room</button>
         ) : (
