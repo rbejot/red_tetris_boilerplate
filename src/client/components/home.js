@@ -1,10 +1,9 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import PseudoForm from '../components/pseudoForm'
+import RoomList from '../components/roomList'
 
-const Home = ({props, actions, state, player}) => {
-    // console.log(props)
-    // console.log(actions)
-    // console.log(state)
+const Home = ({props, actions, state}) => {
     const generate_room = () => {
       let text = "";
       let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -13,12 +12,15 @@ const Home = ({props, actions, state, player}) => {
       return text;
     }
     const room = generate_room()
-    console.log(room)
     return (
       <div>
-        <input id="userName" type="text"/>
-        {state.room ? <Redirect to={`/${state.room}[${player}]`}/> : "" }
-        <button onClick={() => actions.create_room(room, player)}>Create room</button>
+        {state.player ? (
+          <button onClick={() => actions.create_room(room, state.player)}>Créer une room</button>
+        ) : (
+          <PseudoForm actions={actions}/>
+        )}
+        { state.room && state.player ? <Redirect to={`/${state.room}[${state.player}]`}/> : "" }
+        { state.rooms && state.player ? <RoomList actions={actions} state={state} /> : "" }
       </div>
     )
 }
