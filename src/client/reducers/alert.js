@@ -1,8 +1,49 @@
 import { ALERT_POP } from '../actions/alert'
-import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME } from '../actions/game'
+import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, NEW_TETRI, RIGHT, LEFT, DOWN } from '../actions/game'
 
 const reducer = (state = {} , action) => {
+  var position = 0
+  var row = 0
   switch(action.type){
+    case NEW_TETRI:
+      return {
+        ...state,
+        position: action.position,
+        row: action.row
+      }
+    case DOWN:
+      console.log(state.row)
+      if (state.row < 19) {
+        position = state.position + 10
+        row = state.row + 1
+      }
+      else {
+        position = state.position
+        row = state.row
+      }
+      return {
+        ...state,
+        position: position,
+        row: row
+      }
+    case RIGHT:
+      if ((state.position >= (0 + state.row * 10)) && (state.position < (9 + state.row * 10)))
+        position = state.position + 1
+      else
+        position = state.position
+      return {
+        ...state,
+        position: position
+      }
+    case LEFT:
+      if ((state.position > (0 + state.row * 10)) && (state.position <= (9 + state.row * 10)))
+        position = state.position - 1
+      else
+        position = state.position
+      return {
+        ...state,
+        position: position
+      }
     case ALERT_POP:
       return state
     case ERR_USERNAME:
