@@ -101,7 +101,7 @@ const updateRoomsInfo = (room, username, isMaster) => {
     var player_2 = ""
     var isFull = false
   } else {
-    var master = ""
+    var master = ROOMS_INFO[roomNB].master
     var player_2 = username
     var isFull = true
   }
