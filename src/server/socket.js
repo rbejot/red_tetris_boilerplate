@@ -20,7 +20,8 @@ export const initEngine = (io,loginfo) => {
           socket.emit('action', {type: 'roomList', rooms: ROOMS_INFO})
           break
         case 'server/add_username':
-          var user = action.player
+          let username = action.player
+          let user = username.toLowerCase()
           if (checkUsername(user) === true) {
             socket.emit('action', {type: 'good_username', player: user})
             ALL_USERS.push(user)
