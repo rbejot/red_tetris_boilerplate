@@ -24,7 +24,7 @@ const Board = ({props, actions, state}) => {
         <p>Master: {state.master.toString()}</p>
         <p>Start: {state.start.toString()}</p>
         <p>Full: {state.full.toString()}</p>
-        <button onClick={() => actions.new_tetri()}>Tetrimino</button>
+        <button onClick={() => actions.start()}>Tetrimino</button>
         <Tetris props={props} actions={actions} state={state}/>
         <div>
         </div>

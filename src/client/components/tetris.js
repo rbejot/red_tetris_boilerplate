@@ -1,9 +1,11 @@
 import React from 'react'
+import ReactInterval from 'react-interval'
+import { start } from '../actions/game';
 
 const Tetris = ({props, actions, state}) => {
   const boardStyle = {
-    width: '500px',
-    height: '1000px',
+    width: '300px',
+    height: '600px',
     margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
@@ -12,269 +14,284 @@ const Tetris = ({props, actions, state}) => {
   }
   
   const rowStyle = {
-    width: '500px',
-    height: '50px',
+    width: '300px',
+    height: '30px',
     margin: 'auto',
     display: 'flex',
     flexDirection: 'row'
   }
   
   const cellStyle = {
-    width: '50px',
-    height: '50px',
+    width: '30px',
+    height: '30px',
     margin: 'auto',
     border: '1px solid black'
   }
 
   const b_cellStyle = {
-    width: '50px',
-    height: '50px',
+    width: '30px',
+    height: '30px',
     margin: 'auto',
     border: '1px solid black',
     backgroundColor: 'black'
   }
 
+  const cellOccupied = (cell) => {
+    if (state.grid && state.grid.indexOf(cell) > -1)
+      return true
+    else if (state.position && state.position.indexOf(cell) > -1)
+      return true
+    else
+      return false
+  }
+
   return (
     <div style={boardStyle}>
+      {state.start ? <ReactInterval timeout={900} enabled={true} callback={function() {
+        if (!state.tetri_pose)
+          actions.move("down")
+        else
+          actions.new_tetri()
+      }}/> : "" }
       <div style={rowStyle}>
-        {state.position === 0 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 1 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 2 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 3 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 4 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 5 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 6 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 7 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 8 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 9 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(0) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>0</div>}
+        {cellOccupied(1) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>1</div>}
+        {cellOccupied(2) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>2</div>}        
+        {cellOccupied(3) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>3</div>}
+        {cellOccupied(4) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>4</div>}
+        {cellOccupied(5) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>5</div>}
+        {cellOccupied(6) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>6</div>}
+        {cellOccupied(7) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>7</div>}
+        {cellOccupied(8) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>8</div>}
+        {cellOccupied(9) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>9</div>}        
       </div>
       <div style={rowStyle}>
-        {state.position === 10 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 11 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 12 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 13 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 14 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 15 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 16 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 17 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 18 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 19 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}  
+        {cellOccupied(10) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(11) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(12) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(13) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(14) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(15) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(16) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(17) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(18) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(19) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}  
       </div>
       <div style={rowStyle}>
-        {state.position === 20 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 21 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 22 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 23 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 24 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 25 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 26 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 27 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 28 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 29 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(20) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(21) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(22) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(23) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(24) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(25) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(26) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(27) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(28) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(29) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 30 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 31 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 32 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 33 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 34 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 35 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 36 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 37 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 38 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 39 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(30) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(31) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(32) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(33) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(34) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(35) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(36) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(37) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(38) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(39) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 40 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 41 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 42 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 43 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 44 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 45 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 46 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 47 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 48 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 49 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(40) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(41) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(42) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(43) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(44) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(45) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(46) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(47) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(48) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(49) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 50 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 51 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 52 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 53 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 54 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 55 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 56 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 57 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 58 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 59 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(50) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(51) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(52) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(53) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(54) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(55) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(56) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(57) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(58) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(59) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 60 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 61 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 62 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 63 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 64 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 65 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 66 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 67 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 68 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 69 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(60) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(61) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(62) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(63) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(64) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(65) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(66) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(67) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(68) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(69) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 70 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 71 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 72 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 73 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 74 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 75 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 76 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 77 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 78 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 79 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(70) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(71) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(72) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(73) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(74) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(75) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(76) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(77) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(78) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(79) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 80 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 81 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 82 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 83 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 84 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 85 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 86 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 87 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 88 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 89 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(80) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(81) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(82) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(83) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(84) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(85) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(86) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(87) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(88) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(89) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 90 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 91 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 92 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 93 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 94 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 95 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 96 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 97 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 98 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 99 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(90) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(91) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(92) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(93) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(94) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(95) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(96) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(97) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(98) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(99) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 100 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 101 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 102 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 103 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 104 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 105 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 106 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 107 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 108 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 109 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(100) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(101) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(102) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(103) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(104) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(105) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(106) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(107) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(108) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(109) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 110 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 111 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 112 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 113 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 114 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 115 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 116 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 117 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 118 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 119 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(110) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(111) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(112) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(113) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(114) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(115) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(116) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(117) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(118) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(119) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 120 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 121 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 122 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 123 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 124 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 125 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 126 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 127 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 128 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 129 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(120) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(121) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(122) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(123) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(124) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(125) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(126) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(127) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(128) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(129) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 130 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 131 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 132 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 133 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 134 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 135 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 136 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 137 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 138 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 139 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(130) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(131) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(132) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(133) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(134) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(135) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(136) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(137) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(138) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(139) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 140 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 141 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 142 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 143 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 144 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 145 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 146 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 147 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 148 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 149 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(140) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(141) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(142) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(143) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(144) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(145) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(146) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(147) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(148) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(149) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 150 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 151 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 152 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 153 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 154 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 155 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 156 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 157 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 158 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 159 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(150) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(151) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(152) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(153) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(154) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(155) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(156) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(157) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(158) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(159) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 160 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 161 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 162 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 163 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 164 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 165 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 166 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 167 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 168 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 169 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(160) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(161) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(162) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(163) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(164) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(165) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(166) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(167) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(168) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(169) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 170 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 171 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 172 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 173 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 174 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 175 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 176 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 177 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 178 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 179 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(170) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(171) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(172) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(173) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(174) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(175) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(176) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(177) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(178) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(179) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 180 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 181 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 182 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 183 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 184 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 185 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 186 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 187 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 188 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 189 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(180) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(181) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(182) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(183) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(184) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(185) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(186) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(187) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(188) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(189) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
       <div style={rowStyle}>
-        {state.position === 190 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 191 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 192 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
-        {state.position === 193 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 194 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 195 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 196 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 197 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 198 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
-        {state.position === 199 ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(190) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(191) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(192) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        { cellOccupied(193) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(194) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(195) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(196) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(197) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(198) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        { cellOccupied(199) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
       </div>
     </div>
   )

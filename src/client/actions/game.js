@@ -3,10 +3,11 @@ export const ADD_USERNAME = 'server/add_username'
 export const GET_LIST_ROOM = 'server/get_listRoom'
 export const JOIN_ROOM = 'server/join_room'
 export const ERR_USERNAME = 'err_username'
-export const NEW_TETRI = 'new_tetrimino'
 export const RIGHT = 'move_right'
 export const LEFT = 'move_left'
 export const DOWN = 'move_down'
+export const START = 'start_game'
+export const NEW_TETRI = 'new_tetri'
 
 export const create_room = (room, player) => ({
   type: CREATE_ROOM,
@@ -34,10 +35,8 @@ export const err_username = () => ({
   type: ERR_USERNAME
 })
 
-export const new_tetri = () => ({
-  type: NEW_TETRI,
-  position: 0,
-  row: 0
+export const start = () => ({
+  type: START
 })
 
 export const move = (key) => {
@@ -52,3 +51,7 @@ export const move = (key) => {
       break;
   }
 }
+
+export const new_tetri = () => ({
+  type: NEW_TETRI
+})
