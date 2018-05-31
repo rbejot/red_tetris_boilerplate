@@ -1,9 +1,19 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import Tetris from './tetris'
 
 const Board = ({props, actions, state}) => {
     return (
-      <div>
+      <div onKeyDown={(event) => {
+        if (event.key === "ArrowRight")
+          actions.move("right")
+        else if (event.key === "ArrowLeft")
+          actions.move("left")
+        else if (event.key === "ArrowDown")
+          actions.move("down")
+        else
+          console.log(event.key)
+      }}>
         <p>ROOM: {props.match.params.room}</p>
         <p>PLAYER : {props.match.params.player}</p>
         {state.master ? (
@@ -14,6 +24,8 @@ const Board = ({props, actions, state}) => {
         <p>Master: {state.master.toString()}</p>
         <p>Start: {state.start.toString()}</p>
         <p>Full: {state.full.toString()}</p>
+        <button onClick={() => actions.new_tetri()}>Tetrimino</button>
+        <Tetris props={props} actions={actions} state={state}/>
         <div>
         </div>
       </div>
