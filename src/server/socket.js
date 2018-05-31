@@ -24,6 +24,7 @@ export const initEngine = (io,loginfo) => {
           if (checkUsername(user) === true) {
             socket.emit('action', {type: 'good_username', player: user})
             ALL_USERS.push(user)
+            socket.username = user
           } else {
             socket.emit('action', {type: 'username_not_available'})
           }
@@ -36,10 +37,37 @@ export const initEngine = (io,loginfo) => {
           break;
       }
     })
-    socket.on('disconnect', function(){
-      console.log('user disconnected');
+    socket.on('disconnect', () => {
+      UserHasLeft(socket.id, socket.username, socket.room)
+      socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
+      console.log("USERS", USERS_INFO)
+      console.log("ROOMS", ROOMS_INFO)
+      console.log("ALL", ALL_USERS)
+
     });
   })
+}
+
+const UserHasLeft = (id, username, room) => {
+  if (!USERS_INFO.hasOwnProperty(id)) {
+    if (username) {
+      ALL_USERS.splice(username, 1)
+    }
+    return
+  }
+  else {
+    ALL_USERS.splice(username, 1)
+    delete USERS_INFO[id]
+    if (ROOMS_INFO[room].master === username) {
+        if (!ROOMS_INFO[room].isFull) {
+          delete ROOMS_INFO[room]
+          return
+        }
+      ROOMS_INFO[room].master = ROOMS_INFO[room].player_2
+    }
+    ROOMS_INFO[room].player_2 = ""
+    ROOMS_INFO[room].isFull = false
+  }
 }
 
 const leaveRoom = (action, io, socket) => {
@@ -63,6 +91,7 @@ const joinRoom = (action, io, socket) => {
     //console.log('Client ID ' + socket.id + ' joined room ' + room);
     socket.join(room)
     socket.emit('action', {type: 'joined', room: room, id: socket.id, master: action.master})
+    socket.room = room
     io.sockets.in(room).emit('ready');
     let player = new Player(action.player, room, numClients)
     player.isPlayerMaster()
@@ -84,6 +113,7 @@ const createRoom = (action, io, socket) => {
     //TODO: mettre à jour la liste quand qqn quitte une room
     updateUsersInfo(socket.id, action.player, room)
     updateRoomsInfo(room, action.player, true)
+    socket.room = room
     socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     let master = new Player(action.player, room, numClients)
     master.isPlayerMaster()
