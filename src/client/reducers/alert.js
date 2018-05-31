@@ -1,25 +1,82 @@
 import { ALERT_POP } from '../actions/alert'
-import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, NEW_TETRI, RIGHT, LEFT, DOWN } from '../actions/game'
+import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, NEW_TETRI, start } from '../actions/game'
+
+const getRow = (number) => {
+  return Math.ceil((number / 10) - 1 );
+}
+
+const check_cell = (grid, position, direction) => {
+  switch (direction) {
+    case DOWN:
+      for (var i = 0; i < position.length; i++) {
+        if (grid.indexOf(position[i] + 10) > -1)
+          return true
+      }
+      return false
+    default:
+      return true
+  }
+}
+
+const checkBorder = (position) => {
+  for (var i = 0; i < position.length; i++) {
+    if (!(position[i] > (getRow(position[i]) * 10) && (position[i] < (getRow(position[i]) * 10 + 9))))
+      return false
+  }
+  return true
+}
+
+const moveTetri = (pos, value) => {
+  let new_pos = []
+  pos.map((cell) => {
+    new_pos.push(cell + value)
+  })
+  return new_pos
+}
+
+const saveTetri = (grid, positions) => {
+  positions.map((pos) => {
+    grid.push(pos)
+  })
+  return grid
+}
 
 const reducer = (state = {} , action) => {
-  var position = 0
-  var row = 0
+  let position = 0
+  let row = 0
+  let save = []
   switch(action.type){
+    case START: 
+      return {
+        ...state,
+        position: [3, 4, 5, 14],
+        tetri: "T",
+        row: 1,
+        grid: [],
+        start: true
+      }
     case NEW_TETRI:
       return {
         ...state,
-        position: action.position,
-        row: action.row
+        tetri: "T",
+        position: [3, 4, 5, 14],
+        row: 1,
+        tetri_pose: false
       }
     case DOWN:
-      console.log(state.row)
-      if (state.row < 19) {
-        position = state.position + 10
+      if (state.row < 19 && !check_cell(state.grid, state.position, DOWN)) {
+        position = moveTetri(state.position, 10)
         row = state.row + 1
       }
-      else {
-        position = state.position
-        row = state.row
+      else if (state.row) {
+        save = saveTetri(state.grid, state.position)
+        return {
+          ...state,
+          grid: save,
+          tetri_pose: true
+        }
+      } else {
+        state = state
       }
       return {
         ...state,
@@ -27,8 +84,11 @@ const reducer = (state = {} , action) => {
         row: row
       }
     case RIGHT:
-      if ((state.position >= (0 + state.row * 10)) && (state.position < (9 + state.row * 10)))
-        position = state.position + 1
+    // if ((state.position >= (0 + state.row * 10)) && (state.position < (9 + state.row * 10)))
+      // console.log(checkBorder(state.position), "ASDASDASDASDASDASDASD")
+      checkBorder(state.position)
+      if (checkBorder(state.position))
+        position = moveTetri(state.position, 1)
       else
         position = state.position
       return {
@@ -36,8 +96,9 @@ const reducer = (state = {} , action) => {
         position: position
       }
     case LEFT:
-      if ((state.position > (0 + state.row * 10)) && (state.position <= (9 + state.row * 10)))
-        position = state.position - 1
+    // (state.position > (0 + state.row * 10)) && (state.position <= (9 + state.row * 10))
+      if (true)
+        position = moveTetri(state.position, -1)
       else
         position = state.position
       return {
