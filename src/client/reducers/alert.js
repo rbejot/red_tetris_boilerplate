@@ -2,7 +2,10 @@ import { ALERT_POP } from '../actions/alert'
 import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, NEW_TETRI, start } from '../actions/game'
 
 const getRow = (number) => {
-  return Math.ceil((number / 10) - 1 );
+  if (number % 10 === 0)
+    return Math.ceil((number / 10))
+  else 
+    return Math.ceil((number / 10) - 1 );
 }
 
 const check_cell = (grid, position, direction) => {
@@ -18,12 +21,23 @@ const check_cell = (grid, position, direction) => {
   }
 }
 
-const checkBorder = (position) => {
-  for (var i = 0; i < position.length; i++) {
-    if (!(position[i] > (getRow(position[i]) * 10) && (position[i] < (getRow(position[i]) * 10 + 9))))
-      return false
+const checkBorder = (position, direction) => {
+  switch (direction) {
+    case RIGHT:
+      for (var i = 0; i < position.length; i++) {
+        console.log("DEBUG:", position[i], getRow(position[i]))
+        if (!(position[i] < (getRow(position[i]) * 10 + 9)))
+          return false
+      }
+      return true
+    case LEFT:
+      for (var i = 0; i < position.length; i++) {
+        console.log("DEBUG:", position[i] - 1, getRow(position[i]), getRow(position[i]) * 10)
+        if (position[i] - 1 === (getRow(position[i]) - 1 ) * 10 + 9)
+          return false
+      }
+      return true
   }
-  return true
 }
 
 const moveTetri = (pos, value) => {
@@ -86,8 +100,8 @@ const reducer = (state = {} , action) => {
     case RIGHT:
     // if ((state.position >= (0 + state.row * 10)) && (state.position < (9 + state.row * 10)))
       // console.log(checkBorder(state.position), "ASDASDASDASDASDASDASD")
-      checkBorder(state.position)
-      if (checkBorder(state.position))
+      // checkBorder(state.position)
+      if (checkBorder(state.position, RIGHT))
         position = moveTetri(state.position, 1)
       else
         position = state.position
@@ -97,7 +111,7 @@ const reducer = (state = {} , action) => {
       }
     case LEFT:
     // (state.position > (0 + state.row * 10)) && (state.position <= (9 + state.row * 10))
-      if (true)
+      if (checkBorder(state.position, LEFT))
         position = moveTetri(state.position, -1)
       else
         position = state.position
