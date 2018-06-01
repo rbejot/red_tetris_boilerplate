@@ -107,6 +107,15 @@ const rotateTetri = (grid, position, rotate, tetri) => {
         new_pose = newRotation(grid, position, 9, 0, -9, -2)
       else if (rotate === 4)
         new_pose = newRotation(grid, position, -11, 0, 11, -20)
+    case "S":
+      if (rotate === 1)
+        new_pose = newRotation(grid, position, -9, 0, 11, 20)
+      else if (rotate === 2)
+        new_pose = newRotation(grid, position, 11, 0, 9, -2)
+      else if (rotate === 3)
+        new_pose = newRotation(grid, position, 9, 0, -11, -20)
+      else if (rotate === 4)
+        new_pose = newRotation(grid, position, -11, 0, -9, 2)
     default:
       break
   }
@@ -153,6 +162,15 @@ const checkRotate = (grid, position, rotate, tetri) => {
         return checkRotCell(grid, position, 9, 0, -9, -2)
       else if (rotate === 4)
         return checkRotCell(grid, position, -11, 0, 11, -20)
+    case "S":
+      if (rotate === 1)
+        return checkRotCell(grid, position, -9, 0, 11, 20)
+      else if (rotate === 2)
+        return checkRotCell(grid, position, 11, 0, 9, -2)
+      else if (rotate === 3)
+        return checkRotCell(grid, position, 9, 0, -11, -20)
+      else if (rotate === 4)
+        return checkRotCell(grid, position, -11, 0, -9, 2)
     default:
       break
   }
@@ -163,6 +181,7 @@ const checkRotate = (grid, position, rotate, tetri) => {
 // T [3, 4, 5, 14]
 // L [13, 14, 15, 5]
 // J [13, 14, 15, 3]
+// S [13, 14, 4, 5]
 
 const reducer = (state = {} , action) => {
   let position = 0
@@ -173,8 +192,8 @@ const reducer = (state = {} , action) => {
     case START: 
       return {
         ...state,
-        position: [13, 14, 15, 3],
-        tetri: "J",
+        position: [13, 14, 4, 5],
+        tetri: "S",
         rotate: 1,
         row: 1,
         grid: [],
@@ -183,8 +202,8 @@ const reducer = (state = {} , action) => {
     case NEW_TETRI:
       return {
         ...state,
-        tetri: "J",
-        position: [13, 14, 15, 3],
+        tetri: "S",
+        position: [13, 14, 4, 5],
         rotate: 1,
         row: 1,
         tetri_pose: false
