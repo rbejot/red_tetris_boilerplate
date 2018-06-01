@@ -6,6 +6,7 @@ export const ERR_USERNAME = 'err_username'
 export const RIGHT = 'move_right'
 export const LEFT = 'move_left'
 export const DOWN = 'move_down'
+export const UP = 'rotate'
 export const START = 'start_game'
 export const NEW_TETRI = 'new_tetri'
 
@@ -47,6 +48,8 @@ export const move = (key) => {
         return {type: LEFT}
     case "down":
         return {type: DOWN}
+    case "up":
+        return {type: UP}
     default:
       break;
   }

@@ -11,8 +11,10 @@ const Board = ({props, actions, state}) => {
           actions.move("left")
         else if (event.key === "ArrowDown")
           actions.move("down")
+        else if (event.key === "ArrowUp")
+          actions.move("up")
         else
-          console.log(event.key)
+          console.log(event.kqwewey)
       }}>
         <p>ROOM: {props.match.params.room}</p>
         <p>PLAYER : {props.match.params.player}</p>
