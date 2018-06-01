@@ -121,10 +121,6 @@ const rotateTetri = (grid, position, rotate, tetri) => {
         new_pose = newRotation(grid, position, -9, 0, -11, -2)
       else if (rotate === 2)
         new_pose = newRotation(grid, position, 11, 0, -9, -20)
-      else if (rotate === 3)
-        new_pose = newRotation(grid, position, -11, 0, 9, 19)
-      else if (rotate === 4)
-        new_pose = newRotation(grid, position, -11, 0, -9, 2)
     default:
       break
   }
@@ -187,10 +183,6 @@ const checkRotate = (grid, position, rotate, tetri) => {
         return checkRotCell(grid, position, -9, 0, -11, -2)
       else if (rotate === 2)
         return checkRotCell(grid, position, 11, 0, -9, -20)
-      else if (rotate === 3)
-        return checkRotCell(grid, position, -11, 0, 9, 19)
-      else if (rotate === 4)
-        return checkRotCell(grid, position, -11, 0, -9, 2)
     default:
       break
   }
@@ -215,7 +207,7 @@ const reducer = (state = {} , action) => {
         position: [3, 4, 14, 15],
         tetri: "Z",
         rotate: 1,
-        row: 1,
+        row: 0,
         grid: [],
         start: true
       }
@@ -225,7 +217,7 @@ const reducer = (state = {} , action) => {
         tetri: "Z",
         position: [3, 4, 14, 15],
         rotate: 1,
-        row: 1,
+        row: 0,
         tetri_pose: false
       }
     case UP:
