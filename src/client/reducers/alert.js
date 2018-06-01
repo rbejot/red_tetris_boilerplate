@@ -16,6 +16,18 @@ const check_cell = (grid, position, direction) => {
           return true
       }
       return false
+    case RIGHT:
+      for (var i = 0; i < position.length; i++) {
+        if (grid.indexOf(position[i] + 1) > -1)
+          return true
+      }
+      return false
+    case LEFT:
+      for (var i = 0; i < position.length; i++) {
+        if (grid.indexOf(position[i] - 1) > -1)
+          return true
+      }
+      return false
     default:
       return true
   }
@@ -98,10 +110,7 @@ const reducer = (state = {} , action) => {
         row: row
       }
     case RIGHT:
-    // if ((state.position >= (0 + state.row * 10)) && (state.position < (9 + state.row * 10)))
-      // console.log(checkBorder(state.position), "ASDASDASDASDASDASDASD")
-      // checkBorder(state.position)
-      if (checkBorder(state.position, RIGHT))
+      if (checkBorder(state.position, RIGHT) && !check_cell(state.grid, state.position, RIGHT))
         position = moveTetri(state.position, 1)
       else
         position = state.position
@@ -110,8 +119,7 @@ const reducer = (state = {} , action) => {
         position: position
       }
     case LEFT:
-    // (state.position > (0 + state.row * 10)) && (state.position <= (9 + state.row * 10))
-      if (checkBorder(state.position, LEFT))
+      if (checkBorder(state.position, LEFT) && !check_cell(state.grid, state.position, LEFT))
         position = moveTetri(state.position, -1)
       else
         position = state.position
