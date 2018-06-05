@@ -1,13 +1,18 @@
-class Game {
-  constructor(){
+import {Piece} from './piece'
 
+class Game {
+  constructor(room){
+    this.piece = new Piece()
+    this.list = []
+    this.room = room
   }
 
   launchGame(){
+    this.list = this.piece.generateList()
   }
 
   nextPiece(){
-
+    this.list.push(this.piece.generateTetri())
   }
 
   pauseGame(Player) {
