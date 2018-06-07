@@ -3,6 +3,15 @@ export class Player {
     this.user = username
     this.room = room
     this.isMaster = isMaster
+    this.index = 0
+  }
+
+  moveIndex() {
+    return this.index += this.index
+  }
+
+  sendTetri() {
+    // send to player
   }
 
   isPlayerMaster(){
