@@ -87,11 +87,13 @@ const newRotation = (tetri, grid, position, p0, p1, p2, p3) => {
   else if (position[1] === getRow(position[1]) * 10 && checkRotCell(grid, position, p0++, p1++, p2++, p3++)) {
     return [position[0] + p0, position[1] + p1, position[2] + p2, position[3] + p3]
   }
+  console.log(p0, p1, p2, p3)
   return [position[0] + p0, position[1] + p1, position[2] + p2, position[3] + p3]
 }
 
 const rotateTetri = (grid, position, rotate, tetri) => {
   let new_pose = []
+  console.log(tetri)
   switch(tetri) {
     case "T":
       if (rotate === 1)
@@ -112,6 +114,7 @@ const rotateTetri = (grid, position, rotate, tetri) => {
         new_pose = newRotation(tetri, grid, position, 9, 0, -9, -20)
       else if (rotate === 4)
         new_pose = newRotation(tetri, grid, position, -11, 0, 11, 2)
+      break
     case "J":
       if (rotate === 1)
         new_pose = newRotation(tetri, grid, position, -9, 0, 9, 2)
@@ -121,6 +124,7 @@ const rotateTetri = (grid, position, rotate, tetri) => {
         new_pose = newRotation(tetri, grid, position, 9, 0, -9, -2)
       else if (rotate === 4)
         new_pose = newRotation(tetri, grid, position, -11, 0, 11, -20)
+      break
     case "S":
       if (rotate === 1)
         new_pose = newRotation(tetri, grid, position, -9, 0, 11, 20)
@@ -130,6 +134,7 @@ const rotateTetri = (grid, position, rotate, tetri) => {
         new_pose = newRotation(tetri, grid, position, 9, 0, -11, -20)
       else if (rotate === 4)
         new_pose = newRotation(tetri, grid, position, -11, 0, -9, 2)
+      break
     case "Z":
       if (rotate === 1)
         new_pose = newRotation(tetri, grid, position, -9, 0, -11, -2)
@@ -139,6 +144,7 @@ const rotateTetri = (grid, position, rotate, tetri) => {
         new_pose = newRotation(tetri, grid, position, 9, 0, 11, 2)
       else if (rotate === 4)
         new_pose = newRotation(tetri, grid, position, -11, 0, 9, 20)
+      break
     case "I":
       if (rotate === 1)
         new_pose = newRotation(tetri, grid, position, -8, 1, 10, 19)
@@ -148,6 +154,7 @@ const rotateTetri = (grid, position, rotate, tetri) => {
         new_pose = newRotation(tetri, grid, position, 8, -1, -10, -19)
       else if (rotate === 4)
         new_pose = newRotation(tetri, grid, position, -21, -10, 1, 12)
+      break
     default:
       break
   }
@@ -233,6 +240,7 @@ const checkRotate = (grid, position, rotate, tetri) => {
 // J [13, 14, 15, 3]
 // S [13, 14, 4, 5]
 // Z [3, 4, 14, 15]
+// I [3, 4, 5, 6]
 
 const reducer = (state = {} , action) => {
   let position = 0
@@ -243,8 +251,8 @@ const reducer = (state = {} , action) => {
     case START: 
       return {
         ...state,
-        position: [3, 4, 5, 6],
-        tetri: "I",
+        position: [3, 4, 14, 15],
+        tetri: "Z",
         rotate: 1,
         row: 0,
         grid: [],
@@ -253,8 +261,8 @@ const reducer = (state = {} , action) => {
     case NEW_TETRI:
       return {
         ...state,
-        tetri: "I",
-        position: [3, 4, 5, 6],
+        tetri: action.tetri,
+        position: action.position,
         rotate: 1,
         row: 0,
         tetri_pose: false
@@ -262,6 +270,7 @@ const reducer = (state = {} , action) => {
     case UP:
       if (checkRotate(state.grid, state.position, state.rotate, state.tetri)) {
         position = rotateTetri(state.grid, state.position, state.rotate, state.tetri)
+        console.log(state.position, position)
         if (state.rotate !== 4)
           rotate = state.rotate + 1
         else

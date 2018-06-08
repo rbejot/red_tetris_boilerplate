@@ -45,13 +45,43 @@ const Tetris = ({props, actions, state}) => {
       return false
   }
 
+  const randomTetri = (actions) => {
+    var tetri = ["O", "I", "J", "T", "L", "S", "Z"]
+    var i = Math.floor(Math.random() * Math.floor(7))
+    var position = []
+    switch (tetri[i]) {
+      case "O":
+        position = [4, 5, 14, 15]
+        break
+      case "I":
+        position = [3, 4, 5, 6]
+        break
+      case "J":
+        position = [13, 14, 15, 3]
+        break
+      case "T":
+        position = [3, 4, 5, 14]
+        break
+      case "L":
+        position = [13, 14, 15, 5]
+        break
+      case "S":
+        position = [13, 14, 4, 5]
+        break
+      case "Z":
+        position = [3, 4, 14, 15]
+        break
+    }
+    actions.new_tetri(tetri[i], position)
+  }
+
   return (
     <div style={boardStyle}>
       {state.start ? <ReactInterval timeout={900} enabled={true} callback={function() {
         if (!state.tetri_pose)
           actions.move("down")
         else
-          actions.new_tetri()
+          randomTetri(actions)
       }}/> : "" }
       <div style={rowStyle}>
         {cellOccupied(0) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>0</div>}

@@ -55,6 +55,8 @@ export const move = (key) => {
   }
 }
 
-export const new_tetri = () => ({
-  type: NEW_TETRI
+export const new_tetri = (tetri, position) => ({
+  type: NEW_TETRI,
+  tetri: tetri,
+  position: position
 })
