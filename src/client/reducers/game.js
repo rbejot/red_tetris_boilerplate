@@ -1,6 +1,13 @@
 import { ALERT_POP } from '../actions/alert'
 import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start } from '../actions/game'
-import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate, jumpTetri } from './tetris'
+import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate } from './tetris'
+
+const jumpTetri = (grid, pos) => {
+  let i = 0
+  while (!check_cell(grid, [pos[0] + i, pos[1] + i, pos[2] + i, pos[3] + i], DOWN))
+    i += 10
+  return moveTetri(pos, i)
+}
 
 const check_cell = (grid, position, direction) => {
   switch (direction) {
@@ -75,7 +82,6 @@ const reducer = (state = {} , action) => {
       position = jumpTetri(state.grid, state.position)
       console.log(position)
       save = saveTetri(state.grid, position)
-      console.log(save)
       return {
         ...state,
         position: position,

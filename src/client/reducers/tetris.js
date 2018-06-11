@@ -5,16 +5,6 @@ export const getRow = (number) => {
     return Math.ceil((number / 10) - 1 );
 }
 
-export const jumpTetri = (grid, pos) => {
-  let i = 0
-  if (grid.length === 0) {
-    while (getRow(pos[0] + i) !== 20 || getRow(pos[1] + i) !== 20 || getRow(pos[2] + i) !== 20 || getRow(pos[3] + i) !== 20) {
-      i += 10
-    }
-    return [pos[0] + i, pos[1] + i, pos[2] + i, pos[3] + i]
-  } 
-}
-
 export const moveTetri = (pos, value) => {
   let new_pos = []
   if (pos === 0)
