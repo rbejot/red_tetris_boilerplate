@@ -9,18 +9,20 @@ const Board = ({props, actions, state}) => {
 
     return (
       <div style={{ position: "absolute", width:"100%", outline:"none" }} tabIndex="0" onKeyDown={(event) => {
-        if (event.key === "ArrowRight")
+        if (state.start) {
+          if (event.key === "ArrowRight")
           actions.move("right")
-        else if (event.key === "ArrowLeft")
-          actions.move("left")
-        else if (event.key === "ArrowDown")
-          actions.move("down")
-        else if (event.key === "ArrowUp")
-          actions.move("up")
-        else if (event.key === " ")
-          actions.move("jump")
-        else
-          console.log(event.key) 
+          else if (event.key === "ArrowLeft")
+            actions.move("left")
+          else if (event.key === "ArrowDown")
+            actions.move("down")
+          else if (event.key === "ArrowUp")
+            actions.move("up")
+          else if (event.key === " ")
+            actions.move("jump")
+          else
+            console.log(event.key)
+        }
       }}>
         <p>ROOM: {props.match.params.room}</p>
         <p>PLAYER : {props.match.params.player}</p>

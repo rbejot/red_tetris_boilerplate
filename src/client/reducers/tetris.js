@@ -6,11 +6,13 @@ export const getRow = (number) => {
 }
 
 export const jumpTetri = (grid, pos) => {
-  for (var i = 0; i < 200; i + 10) {
-    if ((grid.indexOf(pos[0] + i) && grid.indexOf(pos[1] + i) && grid.indexOf(pos[2] + i) && grid.indexOf(pos[3] + i)) > -1)
-      return [pos[0] + i - 10, pos[1] + i - 10, pos[2] + i - 10, pos[3] + i - 10]
-  }
-  return pos
+  let i = 0
+  if (grid.length === 0) {
+    while (getRow(pos[0] + i) !== 20 || getRow(pos[1] + i) !== 20 || getRow(pos[2] + i) !== 20 || getRow(pos[3] + i) !== 20) {
+      i += 10
+    }
+    return [pos[0] + i, pos[1] + i, pos[2] + i, pos[3] + i]
+  } 
 }
 
 export const moveTetri = (pos, value) => {

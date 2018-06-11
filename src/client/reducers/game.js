@@ -59,7 +59,8 @@ const reducer = (state = {} , action) => {
         row: 0,
         grid: [],
         start: true,
-        gameover: false
+        gameover: false,
+        tetri_nb: 0
       }
     case NEW_TETRI:
       return {
@@ -72,10 +73,14 @@ const reducer = (state = {} , action) => {
       }
     case JUMP:
       position = jumpTetri(state.grid, state.position)
+      console.log(position)
+      save = saveTetri(state.grid, position)
+      console.log(save)
       return {
         ...state,
         position: position,
-        tetri_pose: true  
+        tetri_pose: true,
+        grid: save
       }
     case UP:
       if (checkRotate(state.grid, state.position, state.rotate, state.tetri)) {
@@ -106,7 +111,8 @@ const reducer = (state = {} , action) => {
         return {
           ...state,
           grid: save,
-          tetri_pose: true
+          tetri_pose: true,
+          tetri_nb: state.tetri_nb++ 
         }
       } else {
         state = state
