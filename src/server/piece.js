@@ -3,8 +3,8 @@ export class Piece {
   }
 
   generateTetri() {
-    let tetriminos = ['j', 'l', 't', 'o', 'z', 's', 'i']
-    let tetri = Math.floor(Math.ramdom() * Math.floor(max))
+    let tetriminos = ["O", "I", "J", "T", "L", "S", "Z"]
+    let tetri = Math.floor(Math.ramdom() * Math.floor(7))
     return tetri
   }
 
@@ -15,11 +15,31 @@ export class Piece {
     }
     return list
   }
+
+  getTetriPos(tetri) {
+    var position = []
+    switch (tetri) {
+      case "O":
+        position = [4, 5, 14, 15]
+        break
+      case "I":
+        position = [3, 4, 5, 6]
+        break
+      case "J":
+        position = [13, 14, 15, 3]
+        break
+      case "T":
+        position = [3, 4, 5, 14]
+        break
+      case "L":
+        position = [13, 14, 15, 5]
+        break
+      case "S":
+        position = [13, 14, 4, 5]
+        break
+      case "Z":
+        position = [3, 4, 14, 15]
+        break
+    }
+  }
 }
-
-
-// tetri = list[index]
-
-// lance la partie, cree la list des 10premiers tetriminos
-// joueur pose une piece -> player.index ++
-// 

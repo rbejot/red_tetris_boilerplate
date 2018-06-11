@@ -11,10 +11,12 @@ class Game {
 
   launchGame(){
     this.list = this.tetris.generateList()
+    // send start
     // send this.list[0] to all players
   }
 
-  nextPiece(){
+  nextPiece(index){
+
     let index = this.player2.moveIndex()
     //send this.list[index] to player2
   }

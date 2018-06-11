@@ -9,11 +9,7 @@ export class Player {
   moveIndex() {
     return this.index += this.index
   }
-
-  sendTetri() {
-    // send to player
-  }
-
+  
   isPlayerMaster(){
     if (this.isMaster === 0) {
       console.log('player ' + this.user.toUpperCase() + ' is master of room: ' + this.room)
