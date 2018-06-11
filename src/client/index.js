@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import { storeStateMiddleWare } from './middleware/storeStateMiddleWare'
 import reducer from './reducers'
 import App from './containers/app'
-import { alert } from './actions/alert'
+// import { alert } from './actions/alert'
 import { server } from '../../params'
 
 
@@ -34,4 +34,4 @@ store.subscribe(()=>{
   console.log('new client state', store.getState());
 });
 
-store.dispatch(alert('Soon, will be here a fantastic Tetris ...'))
+// store.dispatch(alert('Soon, will be here a fantastic Tetris ...'))
