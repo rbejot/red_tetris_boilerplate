@@ -34,6 +34,9 @@ export const initEngine = (io,loginfo) => {
             socket.emit('action', {type: 'username_not_available'})
           }
           break
+        case 'server/start':
+          startGame(socket.room, socket.id, action)
+          break
         case 'server/leave_room':
           leaveRoom(action, io, socket)
           break
