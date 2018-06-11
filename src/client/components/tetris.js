@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactInterval from 'react-interval'
-import { start } from '../actions/game';
+import { start, gameover } from '../actions/game';
 
 const Tetris = ({props, actions, state}) => {
   const boardStyle = {
@@ -77,23 +77,23 @@ const Tetris = ({props, actions, state}) => {
 
   return (
     <div style={boardStyle}>
-      {state.start ? <ReactInterval timeout={900} enabled={true} callback={function() {
-        if (!state.tetri_pose)
+      <ReactInterval timeout={900} enabled={state.start} callback={function() {
+        if (!state.tetri_pose && !state.gameover)
           actions.move("down")
         else
           randomTetri(actions)
-      }}/> : "" }
+      }}/>
       <div style={rowStyle}>
-        {cellOccupied(0) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>0</div>}
-        {cellOccupied(1) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>1</div>}
-        {cellOccupied(2) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>2</div>}        
-        {cellOccupied(3) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>3</div>}
-        {cellOccupied(4) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>4</div>}
-        {cellOccupied(5) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>5</div>}
-        {cellOccupied(6) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>6</div>}
-        {cellOccupied(7) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>7</div>}
-        {cellOccupied(8) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>8</div>}
-        {cellOccupied(9) ? <div style={b_cellStyle}></div> : <div style={cellStyle}>9</div>}        
+        {cellOccupied(0) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(1) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(2) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
+        {cellOccupied(3) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(4) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(5) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(6) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(7) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(8) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
+        {cellOccupied(9) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}        
       </div>
       <div style={rowStyle}>
         {cellOccupied(10) ? <div style={b_cellStyle}></div> : <div style={cellStyle}></div>}
