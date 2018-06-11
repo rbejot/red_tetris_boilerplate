@@ -3,8 +3,12 @@ import { Redirect } from 'react-router-dom'
 import Tetris from './tetris'
 
 const Board = ({props, actions, state}) => {
+    const GameOver = () => {
+      return <div>Game Over</div>
+    }
+
     return (
-      <div onKeyDown={(event) => {
+      <div style={{ position: "absolute", width:"100%", outline:"none" }} tabIndex="0" onKeyDown={(event) => {
         if (event.key === "ArrowRight")
           actions.move("right")
         else if (event.key === "ArrowLeft")
@@ -13,8 +17,10 @@ const Board = ({props, actions, state}) => {
           actions.move("down")
         else if (event.key === "ArrowUp")
           actions.move("up")
+        else if (event.key === " ")
+          actions.move("jump")
         else
-          console.log(event.key)
+          console.log(event.key) 
       }}>
         <p>ROOM: {props.match.params.room}</p>
         <p>PLAYER : {props.match.params.player}</p>
@@ -26,10 +32,11 @@ const Board = ({props, actions, state}) => {
         <p>Master: {state.master.toString()}</p>
         <p>Start: {state.start.toString()}</p>
         <p>Full: {state.full.toString()}</p>
-        <button onClick={() => actions.start()}>Tetrimino</button>
+        {!state.start ? <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2> : ""}
         <Tetris props={props} actions={actions} state={state}/>
         <div>
         </div>
+        {state.gameover ? <GameOver/> : ""}
       </div>
     )
 }

@@ -7,8 +7,10 @@ export const RIGHT = 'move_right'
 export const LEFT = 'move_left'
 export const DOWN = 'move_down'
 export const UP = 'rotate'
+export const JUMP = 'jump'
 export const START = 'start_game'
 export const NEW_TETRI = 'new_tetri'
+export const GAME_OVER = 'game_over'
 
 export const create_room = (room, player) => ({
   type: CREATE_ROOM,
@@ -50,11 +52,21 @@ export const move = (key) => {
         return {type: DOWN}
     case "up":
         return {type: UP}
+    case "jump":
+        return {type: JUMP}
     default:
       break;
   }
 }
 
-export const new_tetri = () => ({
-  type: NEW_TETRI
+export const new_tetri = (tetri, position) => ({
+  type: NEW_TETRI,
+  tetri: tetri,
+  position: position
+})
+
+export const gameover = () => ({
+  type: GAME_OVER,
+  gameover: true,
+  start: false
 })
