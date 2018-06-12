@@ -8,7 +8,7 @@ const Board = ({props, actions, state}) => {
     }
 
     return (
-      <div style={{ position: "absolute", width:"100%", outline:"none" }} tabIndex="0" onKeyDown={(event) => {
+      <div style={{ position: "absolute", width:"100%", outline:"none"}} tabIndex="0" onKeyDown={(event) => {
         if (state.start) {
           if (event.key === "ArrowRight")
           actions.move("right")

@@ -94,7 +94,7 @@ const reducer = (state = {} , action) => {
         ...state,
         position: position,
         tetri_pose: true,
-        color_grid: saveColor(state.color_grid, state.position, state.color, save, state.grid),
+        color_grid: saveColor(state.color_grid, position, state.color, save, state.grid),
         grid: save
       }
     case UP:

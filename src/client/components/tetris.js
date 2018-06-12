@@ -10,7 +10,8 @@ const Tetris = ({props, actions, state}) => {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    border: '1px solid grey'
+    border: '10px solid black',
+    borderRadius: '10px'
   }
 
   const colorGrid = (index) => {
@@ -64,7 +65,7 @@ const Tetris = ({props, actions, state}) => {
     var boards = []
     for (var i = 0; i < 200; i++) {
         boards.push(
-          <div key={i} style={{width: '28px',height: '28px',border: '1px solid grey', margin: 'auto', backgroundColor: cellOccupied(i)}}></div>
+          <div key={i} style={{width: '28px',height: '28px',border: '1px solid black', margin: 'auto', backgroundColor: cellOccupied(i)}}></div>
         )
     }
     return (
