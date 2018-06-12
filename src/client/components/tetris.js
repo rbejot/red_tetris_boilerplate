@@ -77,11 +77,10 @@ const Tetris = ({props, actions, state}) => {
 
   return (
     <div style={boardStyle}>
-      <ReactInterval timeout={900} enabled={state.start} callback={function() {
+      <ReactInterval timeout={500} enabled={state.start} callback={function() {
         if (!state.tetri_pose && !state.gameover)
           actions.move("down")
         else if (state.tetri_pose) {
-          console.log("TEFDSFSDFSDFSDFSFD")
           actions.tetri_pose(state.tetri_nb, state.player)
           randomTetri(actions)
         }

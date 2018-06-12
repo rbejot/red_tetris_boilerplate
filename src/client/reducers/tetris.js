@@ -15,11 +15,35 @@ export const moveTetri = (pos, value) => {
   return new_pos
 }
 
-export const saveTetri = (grid, positions) => {
-  positions.map((pos) => {
-    grid.push(pos)
+export const checkLines = (grid) => {
+  var del_line = []
+  grid.sort((a, b) => {
+    return a - b
   })
+  for (var i = 0; i < grid.length; i++) {
+    if (grid[i] % 10 === 0 && (grid[i + 9]) === grid[i] + 9) {
+      del_line.push(i)
+    }
+  }
+  console.log("DEL_LINE: ", del_line)
+  del_line.map((index, i) => {
+    console.log("INDEX to DEL: ", index, ":", i)
+    grid.splice(index - (10 * i), 10)
+    for (var j = 0; j < index - (10 * i); j++) {
+      grid[j] += 10
+    }
+  })
+  console.log("LENGTH:",grid.length)
   return grid
+}
+
+export const saveTetri = (grid, positions) => {
+  positions.map(pos => {
+    if (grid.indexOf(pos)  === -1)
+      grid.push(pos)
+  })
+  console.log("GRID: ", grid)
+  return checkLines(grid)
 }
 
 export const newRotation = (tetri, grid, position, p0, p1, p2, p3) => {

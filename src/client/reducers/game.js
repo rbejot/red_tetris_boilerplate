@@ -1,5 +1,5 @@
 import { ALERT_POP } from '../actions/alert'
-import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start } from '../actions/game'
+import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start, tetri_pose } from '../actions/game'
 import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate } from './tetris'
 
 const jumpTetri = (grid, pos) => {
@@ -60,8 +60,8 @@ const reducer = (state = {} , action) => {
     case START: 
       return {
         ...state,
-        position: [3, 4, 14, 15],
-        tetri: "Z",
+        position: [4, 5, 14, 15],
+        tetri: "O",
         rotate: 1,
         row: 0,
         grid: [],
@@ -80,7 +80,6 @@ const reducer = (state = {} , action) => {
       }
     case JUMP:
       position = jumpTetri(state.grid, state.position)
-      console.log(position)
       save = saveTetri(state.grid, position)
       return {
         ...state,
@@ -101,7 +100,6 @@ const reducer = (state = {} , action) => {
         //Deactivate for I
         // rotate = state.rotate - 1
       }
-      console.log(rotate)
       return {
         ...state,
         position: position,
@@ -112,7 +110,7 @@ const reducer = (state = {} , action) => {
         position = moveTetri(state.position, 10)
         row = state.row + 1
       }
-      else if (state.row) {
+      else if (state.row && !state.tetri_pose) {
         save = saveTetri(state.grid, state.position)
         return {
           ...state,
@@ -123,7 +121,8 @@ const reducer = (state = {} , action) => {
       } else {
         state = state
       }
-      if (position === 0) {
+      if (position === 0 && !state.tetri_pose) {
+        console.log("GAME OVER")
         return {
           ...state,
           gameover: true,
