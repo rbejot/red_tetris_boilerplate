@@ -1,6 +1,6 @@
 import { ALERT_POP } from '../actions/alert'
 import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start, tetri_pose } from '../actions/game'
-import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate } from './tetris'
+import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate, saveColor } from './tetris'
 
 const jumpTetri = (grid, pos) => {
   let i = 0
@@ -51,6 +51,11 @@ const checkBorder = (position, direction) => {
   }
 }
 
+const randomColor = () => {
+  var colors = ["red", "green", "yellow", "blue", "pink", "orange", "violet"]
+  return colors[Math.floor(Math.random() * Math.floor(7))]
+}
+
 const reducer = (state = {} , action) => {
   let position = 0
   let row = 0
@@ -65,15 +70,19 @@ const reducer = (state = {} , action) => {
         rotate: 1,
         row: 0,
         grid: [],
+        color_grid: {},
+        color: randomColor(),
         start: true,
         gameover: false,
-        tetri_nb: 0
+        tetri_nb: 0,
+        color: "red"
       }
     case NEW_TETRI:
       return {
         ...state,
         tetri: action.tetri,
         position: action.position,
+        color: randomColor(),
         rotate: 1,
         row: 0,
         tetri_pose: false
@@ -85,6 +94,7 @@ const reducer = (state = {} , action) => {
         ...state,
         position: position,
         tetri_pose: true,
+        color_grid: saveColor(state.color_grid, state.position, state.color, save, state.grid),
         grid: save
       }
     case UP:
@@ -115,6 +125,7 @@ const reducer = (state = {} , action) => {
         return {
           ...state,
           grid: save,
+          color_grid: saveColor(state.color_grid, state.position, state.color, save, state.grid),
           tetri_pose: true,
           tetri_nb: state.tetri_nb++ 
         }
