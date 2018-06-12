@@ -37,6 +37,18 @@ export const checkLines = (grid) => {
   return grid
 }
 
+export const saveColor = (grid, positions, color, tetri_grid, old_grid) => {
+  positions.map(pos => {
+    grid[pos] = color
+  })
+  old_grid.map((old) => {
+    if (tetri_grid.indexOf(old) === -1)
+      delete grid[old]
+  })
+  console.log(grid)
+  return grid
+}
+
 export const saveTetri = (grid, positions) => {
   positions.map(pos => {
     if (grid.indexOf(pos)  === -1)
