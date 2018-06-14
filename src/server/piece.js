@@ -1,6 +1,5 @@
 export class Piece {
-  constructor(list){
-    this.tetriList = list
+  constructor() {
   }
 
   generateList() {
