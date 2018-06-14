@@ -71,7 +71,6 @@ const reducer = (state = {} , action) => {
         row: 0,
         grid: [],
         color_grid: {},
-        color: randomColor(),
         start: true,
         gameover: false,
         tetri_nb: 0,
@@ -107,8 +106,6 @@ const reducer = (state = {} , action) => {
       }
       else {
         position = state.position
-        //Deactivate for I
-        // rotate = state.rotate - 1
       }
       return {
         ...state,

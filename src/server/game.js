@@ -17,7 +17,7 @@ class Game {
 
   nextPiece(index){
 
-    let index = this.player2.moveIndex()
+    index = this.player2.moveIndex()
     //send this.list[index] to player2
   }
 

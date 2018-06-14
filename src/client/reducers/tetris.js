@@ -25,15 +25,12 @@ export const checkLines = (grid) => {
       del_line.push(i)
     }
   }
-  console.log("DEL_LINE: ", del_line)
   del_line.map((index, i) => {
-    console.log("INDEX to DEL: ", index, ":", i)
     grid.splice(index - (10 * i), 10)
     for (var j = 0; j < index - (10 * i); j++) {
       grid[j] += 10
     }
   })
-  console.log("LENGTH:",grid.length)
   return grid
 }
 
@@ -54,7 +51,6 @@ export const saveTetri = (grid, positions) => {
     if (grid.indexOf(pos)  === -1)
       grid.push(pos)
   })
-  console.log("GRID: ", grid)
   return checkLines(grid)
 }
 
