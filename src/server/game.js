@@ -3,10 +3,11 @@ import {Player} from './player'
 
 export class Game {
   
-  launchGame(){
-    this.list = this.tetris.generateList()
-    // send start
-    // send this.list[0] to all players
+  startGame(room, id, action){
+    var piece = new Piece()
+    ROOMS_INFO[room].gameStarted = true
+    ROOMS_INFO[room].pieces = piece.generateList()
+    console.log("GAME STARTED", room, id, action)
   }
 
   createRoom (action, socket) {
@@ -16,7 +17,7 @@ export class Game {
     if(numClients === 0){
       socket.join(room)
       socket.emit('action', {type: 'create', room: room, id: socket.id})
-      player.updateUsersInfo(socket.id, action.player, room)
+      player.updateUsersInfo(socket.id, action.player, room, 0, "", false)
       this.updateRoomsInfo(room, action.player, true)
       socket.room = room
       socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
@@ -30,7 +31,7 @@ export class Game {
     let clientsInRoom = io.sockets.adapter.rooms[room]
     let numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0
     socket.to(room).emit('action', {type: 'p2_joined', player_2: action.player})
-    player.updateUsersInfo(socket.id, action.player, room)
+    player.updateUsersInfo(socket.id, action.player, room, 0, "", false)
     this.updateRoomsInfo(room, action.player, false)
     socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     if(numClients === 1){
@@ -56,7 +57,8 @@ export class Game {
         var player_2 = username
         var isFull = true
       }
-      obj[roomNB] = {master: master, player_2: player_2, isFull: isFull}
+      var pieces = []
+      obj[roomNB] = {master: master, player_2: player_2, isFull: isFull, gameStarted: false, gameOver: false, pieces: pieces}
       ROOMS_INFO = Object.assign(ROOMS_INFO, obj)
       console.log("ROOMS_INFO", ROOMS_INFO);
     } catch (e) {
@@ -82,16 +84,4 @@ export class Game {
     }
   }
 
-  nextPiece(index){
-  }
-
-  pauseGame(Player) {
-
-  }
-}
-
-export const startGame = (room, id, action) => {
-  let master = new Player(INFOS.ROOMS_INFO[room].master, id, true)
-  let player2 = new Player(INFOS.ROOMS_INFO[room].player2, id, false)  
-  let game = new Game(room, master, player2)
 }

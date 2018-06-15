@@ -25,12 +25,14 @@ export const initEngine = (loginfo) => {
           let user = username.toLowerCase()
           player.checkUsername(user, socket)
           break
-        case 'server/start':
+        case 'server/start_game':
           game.startGame(socket.room, socket.id, action)
           break
         case 'server/leave_room':
           game.leaveRoom(action, io, socket)
           break
+        case 'server/tetri_pose':
+          console.log("ACTION TETRI POSE", action)
         default:
           console.log('No action received');
           break;

@@ -12,12 +12,24 @@ export class Player {
     socket.username = username
   }
 
-   updateUsersInfo (id, username, room) {
-    var socket = id
+   updateUsersInfo (id, username, room, malus, piece, isWinner) {
+    var user = username
     var obj = {}
-    obj[socket] = {username: username, roomNB: room}
+    obj[user] = {id: id, roomNB: room, malus: malus, piece: piece, isWinner: isWinner}
     USERS_INFO = Object.assign(USERS_INFO, obj)
-    console.log("user info", USERS_INFO)
+    console.log("USERS_INFO", USERS_INFO)
+  }
+
+  updateUserMalus (user, malus) {
+    USERS_INFO[user].malus = malus
+  }
+
+  updateUserPiece (user, piece) {
+    USERS_INFO[user].piece = piece
+  }
+
+  updateWinner (user, isWinner) {
+    USERS_INFO[user].isWinner = isWinner
   }
 
   UserHasLeft (id, username, room, socket) {
