@@ -32,7 +32,7 @@ export function create(params){
   const promise = new Promise( (resolve, reject) => {
     const app = require('http').createServer()
     initApp(app, params, () =>{
-      const io = require('socket.io')(app)
+      global.io = require('socket.io')(app)
       const stop = (cb) => {
         io.close()
         app.close( () => {
@@ -41,7 +41,7 @@ export function create(params){
         loginfo(`Engine stopped.`)
         cb()
       }
-      initEngine(io, loginfo)
+      initEngine(loginfo)
       resolve({stop})
     })
   })

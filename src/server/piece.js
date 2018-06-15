@@ -1,7 +1,4 @@
 export class Piece {
-  constructor(){
-  }
-
   generateTetri() {
     let tetriminos = ["O", "I", "J", "T", "L", "S", "Z"]
     let tetri = Math.floor(Math.ramdom() * Math.floor(7))
