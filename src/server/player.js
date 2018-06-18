@@ -24,8 +24,8 @@ export class Player {
     USERS_INFO[user].malus = malus
   }
 
-  updateUserPiece (user, piece) {
-    USERS_INFO[user].piece = piece
+  updateUserIndex (user) {
+    return USERS_INFO[user].piece += 1
   }
 
   updateWinner (user, isWinner) {
@@ -51,7 +51,6 @@ export class Player {
       }
       ROOMS_INFO[room].player_2 = ""
       ROOMS_INFO[room].isFull = false
-      console.log(ROOMS_INFO[room]);
       socket.to(socket.room).emit('action', {type: 'server/update_room', room: ROOMS_INFO[room]});
     }
   }
