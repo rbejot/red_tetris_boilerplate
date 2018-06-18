@@ -29,6 +29,10 @@ export class Game {
     //socket.emit('action', {type: 'new_tetri', pos: pos, color: color, tetri: tetri})
   }
 
+  gameOver(socket) {
+    ROOMS_INFO[socket.room].piece.length = 0
+  }
+
   createRoom (action, socket) {
     let room = action.room
     let clientsInRoom = io.sockets.adapter.rooms[room]
