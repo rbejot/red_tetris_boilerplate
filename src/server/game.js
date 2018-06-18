@@ -2,12 +2,31 @@ import {Piece} from './piece'
 import {Player} from './player'
 
 export class Game {
-  
-  startGame(room, id, action){
-    var piece = new Piece()
+  constructor() {
+    this.piece = new Piece()
+  }
+
+  startGame(room){
     ROOMS_INFO[room].gameStarted = true
-    ROOMS_INFO[room].pieces = piece.generateList()
-    console.log("GAME STARTED", room, id, action)
+    ROOMS_INFO[room].pieces = this.piece.generateList()
+    var tetri = ROOMS_INFO[room].pieces[0]
+    var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0])
+    var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[0])
+    //io.in(room).emit('action', {type: 'new_tetri', pos: pos, color: color, tetri: tetri})
+  }
+
+  newTetri(socket) {
+    var room = socket.room
+    var username = socket.username
+    var i = player.updateUserIndex(username)
+    if (i >= ROOMS_INFO[room].pieces.length -1) {
+      var list = this.piece.generateList()
+      Array.prototype.push.apply(ROOMS_INFO[room].pieces, list)
+    }
+    var tetri = ROOMS_INFO[room].pieces[i]
+    var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[i])
+    var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[i])
+    //socket.emit('action', {type: 'new_tetri', pos: pos, color: color, tetri: tetri})
   }
 
   createRoom (action, socket) {
@@ -17,7 +36,7 @@ export class Game {
     if(numClients === 0){
       socket.join(room)
       socket.emit('action', {type: 'create', room: room, id: socket.id})
-      player.updateUsersInfo(socket.id, action.player, room, 0, "", false)
+      player.updateUsersInfo(socket.id, action.player, room, 0, 0, false)
       this.updateRoomsInfo(room, action.player, true)
       socket.room = room
       socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
@@ -31,7 +50,7 @@ export class Game {
     let clientsInRoom = io.sockets.adapter.rooms[room]
     let numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0
     socket.to(room).emit('action', {type: 'p2_joined', player_2: action.player})
-    player.updateUsersInfo(socket.id, action.player, room, 0, "", false)
+    player.updateUsersInfo(socket.id, action.player, room, 0, 0, false)
     this.updateRoomsInfo(room, action.player, false)
     socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     if(numClients === 1){
