@@ -66,7 +66,7 @@ export class Player {
       ROOMS_INFO[room].gameStarted = false
       ROOMS_INFO[room].gameOver = false
       ROOMS_INFO[room].pieces.length = 0
-      socket.to(socket.room).emit('action', {type: 'server/update_room', room: ROOMS_INFO[room]});
+      socket.to(socket.room).emit('action', {type: 'update_room', room: ROOMS_INFO[room]});
     }
   }
 }

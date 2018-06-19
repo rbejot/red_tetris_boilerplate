@@ -81,8 +81,8 @@ const Tetris = ({props, actions, state}) => {
           if (!state.tetri_pose && !state.gameover)
             actions.move("down")
           else if (state.tetri_pose) {
-            actions.tetri_pose(state.tetri_nb, state.player)
-            randomTetri(actions)
+            actions.tetri_pose(state.player)
+            // randomTetri(actions)
           }
         }}/>
       <TetrisBoard/>

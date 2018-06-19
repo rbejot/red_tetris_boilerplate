@@ -10,7 +10,7 @@ export const UP = 'rotate'
 export const JUMP = 'jump'
 export const START = 'server/start_game'
 export const NEW_TETRI = 'new_tetri'
-export const GAME_OVER = 'game_over'
+export const GAME_OVER = 'server/game_over'
 export const TETRI_POSE = 'server/tetri_pose'
 
 export const create_room = (room, player) => ({
@@ -60,10 +60,9 @@ export const move = (key) => {
   }
 }
 
-export const tetri_pose = (tetri_nb, player) => ({
+export const tetri_pose = (player) => ({
   type: TETRI_POSE,
-  player: player,
-  tetri_nb: tetri_nb
+  player: player
 })
 
 export const new_tetri = (tetri, position) => ({
@@ -72,8 +71,7 @@ export const new_tetri = (tetri, position) => ({
   position: position
 })
 
-export const gameover = () => ({
+export const gameover = (player) => ({
   type: GAME_OVER,
-  gameover: true,
-  start: false
+  player: player
 })
