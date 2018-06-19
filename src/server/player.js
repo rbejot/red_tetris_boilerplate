@@ -33,7 +33,7 @@ export class Player {
   }
 
   UserHasLeft (id, username, room, socket) {
-    if (!USERS_INFO.hasOwnProperty(id)) {
+    if (!USERS_INFO.hasOwnProperty(username)) {
       if (username) {
         ALL_USERS.splice(username, 1)
       }
@@ -41,7 +41,7 @@ export class Player {
     }
     else {
       ALL_USERS.splice(username, 1)
-      delete USERS_INFO[id]
+      delete USERS_INFO[username]
       if (ROOMS_INFO[room].master === username) {
           if (!ROOMS_INFO[room].isFull) {
             delete ROOMS_INFO[room]
@@ -51,6 +51,8 @@ export class Player {
       }
       ROOMS_INFO[room].player_2 = ""
       ROOMS_INFO[room].isFull = false
+      ROOMS_INFO[room].gameStarted = false
+      ROOMS_INFO[room].gameOver = false
       socket.to(socket.room).emit('action', {type: 'server/update_room', room: ROOMS_INFO[room]});
     }
   }
