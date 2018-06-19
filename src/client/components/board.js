@@ -51,6 +51,7 @@ const Board = ({props, actions, state}) => {
         </div>
         {state.gameover ? <GameOver/> : ""}
         {state.win ? <h1>You won !</h1> : ""}
+        {state.leave ? <h1>Player 2 left the game</h1> : ""}
       </div>
     )
 }
