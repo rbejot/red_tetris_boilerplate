@@ -46,8 +46,8 @@ export class Game {
     if (room && ROOMS_INFO[room]) {
       ROOMS_INFO[room].gameOver = true
       ROOMS_INFO[room].gameStarted = false
-      ROOMS_INFO[room].piece.length = 0
-      socket.to(room).emit('action', {type: 'gameover'})
+      ROOMS_INFO[room].pieces.length = 0
+      socket.to(room).emit('action', {type: 'game_over'})
     } else {
       logerror('Error while ending game')
     }
