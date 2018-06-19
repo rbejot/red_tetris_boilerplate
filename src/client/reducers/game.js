@@ -65,6 +65,7 @@ const reducer = (state = {} , action) => {
     case 'start': 
       return {
         ...state,
+        leave: false,
         position: action.pos,
         tetri: action.tetri,
         rotate: 1,
@@ -222,6 +223,7 @@ const reducer = (state = {} , action) => {
         full: action.room.isFull,
         start: action.room.gameStarted,
         p2: "",
+        leave: true,
         win: action.room.isWinner,
         gameover: action.room.gameOver
       }
