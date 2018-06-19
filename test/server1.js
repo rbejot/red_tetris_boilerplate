@@ -6,7 +6,7 @@ import io from 'socket.io-client'
 import params from '../params'
 
 chai.should()
-
+var path = require('path')
 describe('Fake server test', function(){
   let tetrisServer
   before(cb => startServer( params.server, function(err, server){

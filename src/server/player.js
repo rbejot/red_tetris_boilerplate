@@ -21,15 +21,27 @@ export class Player {
   }
 
   updateUserMalus (user, malus) {
-    USERS_INFO[user].malus = malus
+    if (USERS_INFO && USERS_INFO[user]) {
+      return USERS_INFO[user].malus = malus    
+    } else {
+      console.log('error while updating malus')
+    }
   }
 
   updateUserIndex (user) {
-    return USERS_INFO[user].piece += 1
+    if (USERS_INFO && USERS_INFO[user]) {
+      return USERS_INFO[user].piece += 1      
+    } else {
+      console.log('Error while updating piece')
+    }
   }
 
   updateWinner (user, isWinner) {
-    USERS_INFO[user].isWinner = isWinner
+    if (USERS_INFO && USERS_INFO[user]) {
+      return USERS_INFO[user].isWinner = isWinner
+    } else {
+      console.log('Error while updating winner')
+    }
   }
 
   UserHasLeft (id, username, room, socket) {
@@ -53,6 +65,7 @@ export class Player {
       ROOMS_INFO[room].isFull = false
       ROOMS_INFO[room].gameStarted = false
       ROOMS_INFO[room].gameOver = false
+      ROOMS_INFO[room].pieces.length = 0
       socket.to(socket.room).emit('action', {type: 'server/update_room', room: ROOMS_INFO[room]});
     }
   }

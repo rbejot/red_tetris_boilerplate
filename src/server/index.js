@@ -2,7 +2,7 @@ import fs  from 'fs'
 import debug from 'debug'
 import {initEngine} from './socket'
 
-const logerror = debug('tetris:error')
+export const logerror = debug('tetris:error')
   , loginfo = debug('tetris:info')
 
 const initApp = (app, params, cb) => {
