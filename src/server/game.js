@@ -16,7 +16,7 @@ export class Game {
       var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[0])
       io.in(room).emit('action', {type: 'start', pos: pos, color: "#" + color, tetri: tetri})
     } else {
-      console.log("Couldn't start game")
+      logerror("Couldn't start game")
     }
 
   }
@@ -42,7 +42,16 @@ export class Game {
   }
 
   gameOver(socket) {
-    ROOMS_INFO[socket.room].piece.length = 0
+    var room = socket.room
+    if (room && ROOMS_INFO[room]) {
+      ROOMS_INFO[room].gameOver = true
+      ROOMS_INFO[room].gameStarted = false
+      ROOMS_INFO[room].piece.length = 0
+      socket.to(room).emit('action', {type: 'gameover'})
+    } else {
+      logerror('Error while ending game')
+    }
+   
   }
 
   createRoom (action, socket) {
