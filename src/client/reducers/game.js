@@ -73,7 +73,6 @@ const reducer = (state = {} , action) => {
         color_grid: {},
         start: true,
         gameover: false,
-        tetri_nb: 0,
         color: "red"
       }
     case NEW_TETRI:
@@ -123,14 +122,12 @@ const reducer = (state = {} , action) => {
           ...state,
           grid: save,
           color_grid: saveColor(state.color_grid, state.position, state.color, save, state.grid),
-          tetri_pose: true,
-          tetri_nb: state.tetri_nb++ 
+          tetri_pose: true
         }
       } else {
         state = state
       }
       if (position === 0 && !state.tetri_pose) {
-        console.log("GAME OVER")
         return {
           ...state,
           gameover: true,

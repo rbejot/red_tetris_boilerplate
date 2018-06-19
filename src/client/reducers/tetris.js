@@ -42,6 +42,10 @@ export const saveColor = (grid, positions, color, tetri_grid, old_grid) => {
     if (tetri_grid.indexOf(old) === -1)
       delete grid[old]
   })
+  tetri_grid.map((tetri) => {
+    if (!grid[tetri])
+      grid[tetri] = grid[tetri - 10]
+  })
   console.log(grid)
   return grid
 }
