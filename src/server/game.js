@@ -12,7 +12,7 @@ export class Game {
     var tetri = ROOMS_INFO[room].pieces[0]
     var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0])
     var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[0])
-    //io.in(room).emit('action', {type: 'new_tetri', pos: pos, color: color, tetri: tetri})
+    // io.in(room).emit('action', {type: 'new_tetri', pos: pos, color: color, tetri: tetri})
   }
 
   newTetri(socket) {
@@ -26,7 +26,7 @@ export class Game {
     var tetri = ROOMS_INFO[room].pieces[i]
     var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[i])
     var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[i])
-    //socket.emit('action', {type: 'new_tetri', pos: pos, color: color, tetri: tetri})
+    // socket.emit('action', {type: 'new_tetri', pos: pos, color: color, tetri: tetri})
   }
 
   gameOver(socket) {
