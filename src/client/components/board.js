@@ -34,7 +34,7 @@ const Board = ({props, actions, state}) => {
         <p>Master: {state.master.toString()}</p>
         <p>Start: {state.start.toString()}</p>
         <p>Full: {state.full.toString()}</p>
-        {!state.start ? <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2> : ""}
+        {!state.start && state.master ? <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2> : <h2>Waiting for master player...</h2>}
         <Tetris props={props} actions={actions} state={state}/>
         <div>
         </div>
