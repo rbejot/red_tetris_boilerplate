@@ -7,6 +7,15 @@ const Board = ({props, actions, state}) => {
       return <div>Game Over</div>
     }
 
+    const Start = () => {
+      if (!state.start && state.master)
+        return <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2>
+      else if (!state.start)
+        return <h2>Waiting for master player...</h2>
+      else
+        return <h2>GO !</h2>
+    }
+
     return (
       <div style={{ position: "absolute", width:"100%", outline:"none"}} tabIndex="0" onKeyDown={(event) => {
         if (state.start) {
@@ -34,7 +43,8 @@ const Board = ({props, actions, state}) => {
         <p>Master: {state.master.toString()}</p>
         <p>Start: {state.start.toString()}</p>
         <p>Full: {state.full.toString()}</p>
-        {!state.start && state.master ? <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2> : <h2>Waiting for master player...</h2>}
+        <Start/>
+        {/* {!state.start && state.master ? <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2> : <h2>Waiting for master player...</h2>} */}
         <Tetris props={props} actions={actions} state={state}/>
         <div>
         </div>
