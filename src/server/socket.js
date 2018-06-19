@@ -2,9 +2,12 @@ import {Game} from './game'
 import {Player} from './player';
 
 export const initEngine = (loginfo) => {
+  global.ALL_USERS = []
+  global.USERS_INFO = {}
+  global.ROOMS_INFO = {}
+  global.game = new Game()
+  global.player = new Player()
   io.on('connection', function(socket){
-    global.game = new Game()
-    global.player = new Player()
     loginfo("Socket connected: " + socket.id)
     socket.on('action', (action) => {
       switch(action.type) {
