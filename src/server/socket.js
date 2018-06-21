@@ -36,10 +36,13 @@ export const initEngine = (loginfo) => {
           break
         case 'server/tetri_pose':
           game.newTetri(socket)
-          break;
+          break
+        case 'server/game_over':
+          game.gameOver(socket)
+          break
         default:
           console.log(action, 'No action received');
-          break;
+          break
       }
     })
     socket.on('disconnect', () => {

@@ -4,6 +4,7 @@ import Tetris from './tetris'
 
 const Board = ({props, actions, state}) => {
     const GameOver = () => {
+      actions.gameover(state.player)
       return <div>Game Over</div>
     }
 
@@ -49,6 +50,8 @@ const Board = ({props, actions, state}) => {
         <div>
         </div>
         {state.gameover ? <GameOver/> : ""}
+        {state.win ? <h1>You won !</h1> : ""}
+        {state.leave ? <h1>Player 2 left the game</h1> : ""}
       </div>
     )
 }

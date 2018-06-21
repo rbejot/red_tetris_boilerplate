@@ -1,3 +1,5 @@
+import {logerror} from './index'
+
 export class Player {
   checkUsername (username, socket) {
     if (ALL_USERS.length > 0) {
@@ -17,14 +19,13 @@ export class Player {
     var obj = {}
     obj[user] = {id: id, roomNB: room, malus: malus, piece: piece, isWinner: isWinner}
     USERS_INFO = Object.assign(USERS_INFO, obj)
-    console.log("USERS_INFO", USERS_INFO)
   }
 
   updateUserMalus (user, malus) {
     if (USERS_INFO && USERS_INFO[user]) {
-      return USERS_INFO[user].malus = malus    
+      return USERS_INFO[user].malus += malus    
     } else {
-      console.log('error while updating malus')
+      logerror('error while updating malus')
     }
   }
 
@@ -32,7 +33,7 @@ export class Player {
     if (USERS_INFO && USERS_INFO[user]) {
       return USERS_INFO[user].piece += 1      
     } else {
-      console.log('Error while updating piece')
+      logerror('Error while updating piece')
     }
   }
 
@@ -40,7 +41,7 @@ export class Player {
     if (USERS_INFO && USERS_INFO[user]) {
       return USERS_INFO[user].isWinner = isWinner
     } else {
-      console.log('Error while updating winner')
+      logerror('Error while updating winner')
     }
   }
 
@@ -59,14 +60,19 @@ export class Player {
             delete ROOMS_INFO[room]
             return
           }
-        ROOMS_INFO[room].master = ROOMS_INFO[room].player_2
-      }
+        var user = ROOMS_INFO[room].player_2
+        ROOMS_INFO[room].master = user
+        } else {
+          var user = ROOMS_INFO[room].master        
+        }
+      USERS_INFO[user].piece = 0
+      USERS_INFO[user].malus = 0
       ROOMS_INFO[room].player_2 = ""
       ROOMS_INFO[room].isFull = false
       ROOMS_INFO[room].gameStarted = false
       ROOMS_INFO[room].gameOver = false
       ROOMS_INFO[room].pieces.length = 0
-      socket.to(socket.room).emit('action', {type: 'server/update_room', room: ROOMS_INFO[room]});
+      socket.to(socket.room).emit('action', {type: 'update_room', room: ROOMS_INFO[room]});
     }
   }
 }

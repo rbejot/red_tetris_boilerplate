@@ -62,25 +62,26 @@ const reducer = (state = {} , action) => {
   let save = []
   let rotate = 0
   switch(action.type){
-    case START: 
+    case 'start': 
       return {
         ...state,
-        position: [4, 5, 14, 15],
-        tetri: "O",
+        leave: false,
+        position: action.pos,
+        tetri: action.tetri,
         rotate: 1,
         row: 0,
         grid: [],
         color_grid: {},
         start: true,
         gameover: false,
-        color: "red"
+        color: action.color
       }
-    case NEW_TETRI:
+    case 'new_tetri':
       return {
         ...state,
         tetri: action.tetri,
-        position: action.position,
-        color: randomColor(),
+        position: action.pos,
+        color: action.color,
         rotate: 1,
         row: 0,
         tetri_pose: false
@@ -175,6 +176,11 @@ const reducer = (state = {} , action) => {
         ...state,
         error_username: "Pseudo déjà utilisé"
       }
+    case 'game_over':
+      return {
+        ...state,
+        win: true
+      }
     case 'not_created':
       return { party: false }
     case 'create':
@@ -208,6 +214,18 @@ const reducer = (state = {} , action) => {
         master_name: action.master,
         full: true,
         start: false
+      }
+    case 'update_room':
+      return {
+        ...state,
+        master: true,
+        master_name: action.room.master,
+        full: action.room.isFull,
+        start: action.room.gameStarted,
+        p2: "",
+        leave: true,
+        win: action.room.isWinner,
+        gameover: action.room.gameOver
       }
     case 'p2_joined':
       return {
