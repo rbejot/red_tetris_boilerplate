@@ -13,7 +13,7 @@ export class Piece {
     return list
   }
 
-  getTetriPos(tetri) {
+  getTetriPos(tetri, malus) {
     var position = []
     switch (tetri) {
       case "O":
@@ -37,6 +37,9 @@ export class Piece {
       case "Z":
         position = [3, 4, 14, 15]
         break
+    }
+    for (var i = 0; i < 4; i++) {
+      position[i] *= (malus * 10)
     }
     return position
   }

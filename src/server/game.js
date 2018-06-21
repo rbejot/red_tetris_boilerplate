@@ -9,6 +9,12 @@ export class Game {
 
   startGame(room){
     if (ROOMS_INFO[room]) {
+      var master = ROOMS_INFO[room].master
+      var player2 = ROOMS_INFO[room].player_2
+      if (USERS_INFO[master] && USERS_INFO[player2]) {
+        USERS_INFO[master].piece = 0
+        USERS_INFO[player2].piece = 0
+      }
       ROOMS_INFO[room].gameStarted = true
       ROOMS_INFO[room].pieces = this.piece.generateList()
       var tetri = ROOMS_INFO[room].pieces[0]
@@ -115,16 +121,12 @@ export class Game {
   }
 
    listRooms () {
-    try {
       var rooms = []
       for( var room in io.sockets.adapter.rooms ) {
         if (io.sockets.adapter.rooms[room].length === 1 && room.length === 5)
           rooms.push(room);
       }
       return rooms
-    } catch (e) {
-      console.log(e)
-    }
   }
 
 }

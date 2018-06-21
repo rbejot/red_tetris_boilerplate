@@ -17,12 +17,12 @@ export class Player {
     var obj = {}
     obj[user] = {id: id, roomNB: room, malus: malus, piece: piece, isWinner: isWinner}
     USERS_INFO = Object.assign(USERS_INFO, obj)
-    console.log("USERS_INFO", USERS_INFO)
+    // console.log("USERS_INFO", USERS_INFO)
   }
 
   updateUserMalus (user, malus) {
     if (USERS_INFO && USERS_INFO[user]) {
-      return USERS_INFO[user].malus = malus    
+      return USERS_INFO[user].malus += malus    
     } else {
       console.log('error while updating malus')
     }
@@ -59,8 +59,15 @@ export class Player {
             delete ROOMS_INFO[room]
             return
           }
-        ROOMS_INFO[room].master = ROOMS_INFO[room].player_2
-      }
+        var user = ROOMS_INFO[room].player_2
+        ROOMS_INFO[room].master = user
+        } else {
+          var user = ROOMS_INFO[room].master        
+        }
+      console.log("user avant quitter", USERS_INFO[user])
+      USERS_INFO[user].piece = 0
+      USERS_INFO[user].malus = 0
+      console.log("user apres quitter", USERS_INFO[user])
       ROOMS_INFO[room].player_2 = ""
       ROOMS_INFO[room].isFull = false
       ROOMS_INFO[room].gameStarted = false

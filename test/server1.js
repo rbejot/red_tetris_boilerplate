@@ -4,9 +4,11 @@ import rootReducer from '../src/client/reducers'
 import {ping} from '../src/client/actions/server'
 import io from 'socket.io-client'
 import params from '../params'
+import expect from 'expect'
 
 chai.should()
 var path = require('path')
+
 describe('Fake server test', function(){
   let tetrisServer
   before(cb => startServer( params.server, function(err, server){
@@ -25,3 +27,4 @@ describe('Fake server test', function(){
     store.dispatch(ping())
   });
 });
+
