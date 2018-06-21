@@ -39,8 +39,10 @@ export class Piece {
         break
     }
     for (var i = 0; i < 4; i++) {
-      position[i] *= (malus * 10)
+      position[i] += (malus * 10)
     }
+
+    console.log("tetri", tetri, "pos", position, "malus", malus)
     return position
   }
 
@@ -51,22 +53,22 @@ export class Piece {
         color = '24a6f2'
         break
       case "I":
-        color = 'eff23e'
+        color = 'fcde00'
         break
       case "J":
-        color = '3ef2a4'
+        color = '47c400'
         break
       case "T":
-        color = 'f934f6'
+        color = 'f70e7b'
         break
       case "L":
-        color = 'f93441'
+        color = 'db0000'
         break
       case "S":
-        color = '6d171b'
+        color = '820093'
         break
       case "Z":
-        color = '2b495b'
+        color = '0925f7'
         break
     }
     return color

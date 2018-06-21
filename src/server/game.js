@@ -18,7 +18,7 @@ export class Game {
       ROOMS_INFO[room].gameStarted = true
       ROOMS_INFO[room].pieces = this.piece.generateList()
       var tetri = ROOMS_INFO[room].pieces[0]
-      var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0])
+      var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0], 0)
       var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[0])
       io.in(room).emit('action', {type: 'start', pos: pos, color: "#" + color, tetri: tetri})
     } else {
@@ -31,17 +31,20 @@ export class Game {
     var room = socket.room
     var username = socket.username
     if (username && ROOMS_INFO[room]) {
-      console.log("username", username)
-      console.log("user info", USERS_INFO[username])
       var i = player.updateUserIndex(username)
       if (i >= ROOMS_INFO[room].pieces.length -1) {
         var list = this.piece.generateList()
         Array.prototype.push.apply(ROOMS_INFO[room].pieces, list)
       }
-      var tetri = ROOMS_INFO[room].pieces[i]
-      var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[i])
-      var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[i])
-      socket.emit('action', {type: 'new_tetri', pos: pos, color: "#" + color, tetri: tetri})
+      if (USERS_INFO[username] && ROOMS_INFO[room]) {
+        var malus = USERS_INFO[username].malus
+        var tetri = ROOMS_INFO[room].pieces[i]
+        var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[i], malus)
+        var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[i])
+        socket.emit('action', {type: 'new_tetri', pos: pos, color: "#" + color, tetri: tetri})
+      } else {
+        logerror('Error while picking new tetri')
+      }
     } else {
       logerror('Error while sending new tetriminos')
     }
@@ -76,7 +79,7 @@ export class Game {
         socket.emit('action', {type: 'not_created', room: room})
       }
     } else {
-      console.log('Error while creating the room')
+      logerror('Error while creating the room')
     }
   }
 
