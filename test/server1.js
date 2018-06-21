@@ -26,5 +26,15 @@ describe('Fake server test', function(){
     })
     store.dispatch(ping())
   });
+
+  it('should send roomList', function(done){
+    const initialState = {}
+    const socket = io(params.server.url)
+    const store =  configureStore(rootReducer, socket, initialState, {
+      'roomList': () =>  done()
+    })
+    store.dispatch(get_listRoom())
+  });
+
 });
 
