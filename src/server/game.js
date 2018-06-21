@@ -11,7 +11,7 @@ export class Game {
     if (ROOMS_INFO[room]) {
       var master = ROOMS_INFO[room].master
       var player2 = ROOMS_INFO[room].player_2
-      if (USERS_INFO[master] && USERS_INFO[player2]) {
+      if (USERS_INFO && USERS_INFO[master] && USERS_INFO[player2]) {
         USERS_INFO[master].piece = 0
         USERS_INFO[player2].piece = 0
       }
@@ -36,7 +36,7 @@ export class Game {
         var list = this.piece.generateList()
         Array.prototype.push.apply(ROOMS_INFO[room].pieces, list)
       }
-      if (USERS_INFO[username] && ROOMS_INFO[room]) {
+      if (USERS_INFO && USERS_INFO[username]) {
         var malus = USERS_INFO[username].malus
         var tetri = ROOMS_INFO[room].pieces[i]
         var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[i], malus)

@@ -1,3 +1,5 @@
+import { logerror } from "./index";
+
 export class Piece {
   generateTetri() {
     let tetriminos = ["O", "I", "J", "T", "L", "S", "Z"]
@@ -14,63 +16,73 @@ export class Piece {
   }
 
   getTetriPos(tetri, malus) {
-    var position = []
-    switch (tetri) {
-      case "O":
-        position = [4, 5, 14, 15]
-        break
-      case "I":
-        position = [3, 4, 5, 6]
-        break
-      case "J":
-        position = [13, 14, 15, 3]
-        break
-      case "T":
-        position = [3, 4, 5, 14]
-        break
-      case "L":
-        position = [13, 14, 15, 5]
-        break
-      case "S":
-        position = [13, 14, 4, 5]
-        break
-      case "Z":
-        position = [3, 4, 14, 15]
-        break
-    }
-    for (var i = 0; i < 4; i++) {
-      position[i] += (malus * 10)
+    if (tetri) {
+      var position = []
+      switch (tetri) {
+        case "O":
+          position = [4, 5, 14, 15]
+          break
+        case "I":
+          position = [3, 4, 5, 6]
+          break
+        case "J":
+          position = [13, 14, 15, 3]
+          break
+        case "T":
+          position = [3, 4, 5, 14]
+          break
+        case "L":
+          position = [13, 14, 15, 5]
+          break
+        case "S":
+          position = [13, 14, 4, 5]
+          break
+        case "Z":
+          position = [3, 4, 14, 15]
+          break
+      }
+      if (malus && malus >= 0) {
+        for (var i = 0; i < 4; i++) {
+          position[i] += (malus * 10)
+        }
+      }
+      return position
+    } else {
+      logerror('Error while getting tetri position')
     }
 
-    console.log("tetri", tetri, "pos", position, "malus", malus)
-    return position
   }
 
   getTetriColor(tetri) {
-    var color = ''
-    switch (tetri) {
-      case "O":
-        color = '24a6f2'
-        break
-      case "I":
-        color = 'fcde00'
-        break
-      case "J":
-        color = '47c400'
-        break
-      case "T":
-        color = 'f70e7b'
-        break
-      case "L":
-        color = 'db0000'
-        break
-      case "S":
-        color = '820093'
-        break
-      case "Z":
-        color = '0925f7'
-        break
+    if (tetri) {
+      var color = ''
+      switch (tetri) {
+        case "O":
+          color = '4dc918'
+          break
+        case "I":
+          color = 'fcef00'
+          break
+        case "J":
+          color = 'f27900'
+          break
+        case "T":
+          color = 'ed1c5e'
+          break
+        case "L":
+          color = '768bfc'
+          break
+        case "S":
+          color = 'b509f9'
+          break
+        case "Z":
+          color = '6cd8fc'
+          break
+      }
+      return color
+    } else {
+      logerror('Error while getting tetri color')
     }
-    return color
   }
+
 }
