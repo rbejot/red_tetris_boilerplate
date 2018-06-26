@@ -1,3 +1,15 @@
+export const addMalus = (grid, malus) => {
+  grid.map(e => {
+    grid[e] -= malus * 10
+  })
+}
+
+export const checkMalus = (new_grid, old) => {
+  if (old.length > new_grid.length)
+     return (old.length - new_grid.length + 4) / 10
+  return 0
+}              
+
 export const getRow = (number) => {
   if (number % 10 === 0)
     return Math.ceil((number / 10))
@@ -46,11 +58,11 @@ export const saveColor = (grid, positions, color, tetri_grid, old_grid) => {
     if (!grid[tetri])
       grid[tetri] = grid[tetri - 10]
   })
-  console.log(grid)
   return grid
 }
 
 export const saveTetri = (grid, positions) => {
+  grid = [...grid]
   positions.map(pos => {
     if (grid.indexOf(pos)  === -1)
       grid.push(pos)
