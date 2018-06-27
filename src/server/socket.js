@@ -35,7 +35,7 @@ export const initEngine = (loginfo) => {
           game.leaveRoom(action, io, socket)
           break
         case 'server/tetri_pose':
-          game.newTetri(socket)
+          game.newTetri(socket, action)
           break
         case 'server/game_over':
           game.gameOver(socket)
