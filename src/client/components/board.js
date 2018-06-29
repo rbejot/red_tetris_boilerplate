@@ -9,9 +9,9 @@ const Board = ({props, actions, state}) => {
     }
 
     const Start = () => {
-      if (!state.start && state.master)
+      if (!state.start && state.master || state.win && state.master)
         return <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2>
-      else if (!state.start)
+      else if (!state.start || state.win)
         return <h2>Waiting for master player...</h2>
       else
         return <h2>GO !</h2>
@@ -19,7 +19,7 @@ const Board = ({props, actions, state}) => {
 
     return (
       <div style={{ position: "absolute", width:"100%", outline:"none"}} tabIndex="0" onKeyDown={(event) => {
-        if (state.start) {
+        if (state.start && !state.gameover) {
           if (event.key === "ArrowRight")
           actions.move("right")
           else if (event.key === "ArrowLeft")

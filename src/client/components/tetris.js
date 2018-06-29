@@ -79,7 +79,7 @@ const Tetris = ({props, actions, state}) => {
   return (
     <div>
       <ReactInterval timeout={500} enabled={state.start} callback={function() {
-          if (!state.tetri_pose && !state.gameover)
+          if (!state.tetri_pose && !state.gameover && !state.win)
             actions.move("down")
           else if (state.tetri_pose) {
             actions.tetri_pose(state.player, state.malus_to_p2, state.grid)

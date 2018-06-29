@@ -80,6 +80,7 @@ const reducer = (state = {} , action) => {
         color_grid: {},
         start: true,
         gameover: false,
+        win: false,
         color: action.color
       }
     case 'new_tetri':
