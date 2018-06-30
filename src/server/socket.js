@@ -29,7 +29,7 @@ export const initEngine = (loginfo) => {
           player.checkUsername(user, socket)
           break
         case 'server/start_game':
-          game.startGame(socket.room)
+          game.startGame(socket, socket.room)
           break
         case 'server/leave_room':
           game.leaveRoom(action, io, socket)

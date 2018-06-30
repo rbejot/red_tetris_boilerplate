@@ -7,7 +7,8 @@ const RoomList = ({actions, state}) => {
   )
   console.log(result)
   const listItems = Object.keys(state.rooms).map(room => {
-    if (state.rooms[room].isFull == false)
+    if (!state.rooms[room].isFull && !state.rooms[room].gameStarted ||
+        state.rooms[room].gameOver && !state.rooms[room].isFull && !state.rooms[room].gameStarted)
       return <li key={room}><Link onClick={() => actions.join_room(room, state.player, state.rooms[room].master)} to={`:${room}[:${state.player}]`}>{room}</Link> {state.rooms[room].master} </li>
     }
   )

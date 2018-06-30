@@ -7,7 +7,7 @@ export class Game {
     this.piece = new Piece()
   }
 
-  startGame(room){
+  startGame(socket, room){
     if (ROOMS_INFO[room]) {
       var master = ROOMS_INFO[room].master
       var player2 = ROOMS_INFO[room].player_2
@@ -16,11 +16,13 @@ export class Game {
         USERS_INFO[player2].piece = 0
       }
       ROOMS_INFO[room].gameStarted = true
+      ROOMS_INFO[room].gameOver = false
       ROOMS_INFO[room].pieces = this.piece.generateList()
       var tetri = ROOMS_INFO[room].pieces[0]
       var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0], 0)
       var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[0])
       io.in(room).emit('action', {type: 'start', pos: pos, color: "#" + color, tetri: tetri})
+      socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     } else {
       logerror("Couldn't start game")
     }
@@ -61,6 +63,7 @@ export class Game {
       ROOMS_INFO[room].gameStarted = false
       ROOMS_INFO[room].pieces.length = 0
       socket.to(room).emit('action', {type: 'game_over'})
+      socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     } else {
       logerror('Error while ending game')
     }
