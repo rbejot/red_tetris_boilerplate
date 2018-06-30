@@ -2,18 +2,20 @@ import { ALERT_POP } from '../actions/alert'
 import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start, tetri_pose } from '../actions/game'
 import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate, saveColor, checkMalus, addMalus } from './tetris'
 
-const jumpTetri = (grid, pos) => {
+const jumpTetri = (grid, pos, dead_grid) => {
   let i = 0
-  while (!check_cell(grid, [pos[0] + i, pos[1] + i, pos[2] + i, pos[3] + i], DOWN))
+  while (!check_cell(grid, [pos[0] + i, pos[1] + i, pos[2] + i, pos[3] + i], DOWN, dead_grid))
     i += 10
   return moveTetri(pos, i)
 }
 
-const check_cell = (grid, position, direction) => {
+const check_cell = (grid, position, direction, dead_grid) => {
   switch (direction) {
     case DOWN:
       for (var i = 0; i < position.length; i++) {
         if (grid.indexOf(position[i] + 10) > -1 || position[i] + 10 >= 200)
+          return true
+        if (dead_grid.indexOf(position[i] + 10) > -1)
           return true
       }
       return false
@@ -61,25 +63,32 @@ const reducer = (state = {} , action) => {
   let row = 0
   let save = []
   let rotate = 0
+  let color = []
   let malus = 0
   switch(action.type){
-    // TODO: Je dois recevoir 'tetri_pose_p2' avec
-    // action.malus -> nombre de lignes à ajouter à la grille du joueur
-    // action.grid_p2 -> spectre
     case 'tetri_pose_p2':
-      save = addMalus(state.grid, action.malus)
+      if (action.malus_p2 > 0)
+        addMalus(state.grid, action.malus_p2, state.color_grid, state.dead_grid)
+      return {
+        ...state,
+        dead_grid: state.dead_grid,
+        grid_p2: action.grid_p2
+      }
     case 'start': 
       return {
         ...state,
         leave: false,
         position: action.pos,
         tetri: action.tetri,
+        dead_grid: [],
         rotate: 1,
         row: 0,
         grid: [],
         color_grid: {},
         start: true,
         gameover: false,
+        win: false,
+        grid_p2: [],
         color: action.color
       }
     case 'new_tetri':
@@ -93,7 +102,7 @@ const reducer = (state = {} , action) => {
         tetri_pose: false
       }
     case JUMP:
-      position = jumpTetri(state.grid, state.position)
+      position = jumpTetri(state.grid, state.position, state.dead_grid)
       save = saveTetri(state.grid, position)
       malus = checkMalus(save, state.grid)
       return {
@@ -121,7 +130,7 @@ const reducer = (state = {} , action) => {
         rotate: rotate
       }
     case DOWN:
-      if (state.row < 19 && !check_cell(state.grid, state.position, DOWN)) {
+      if (state.row < 19 && !check_cell(state.grid, state.position, DOWN, state.dead_grid)) {
         position = moveTetri(state.position, 10)
         row = state.row + 1
       }
@@ -151,7 +160,7 @@ const reducer = (state = {} , action) => {
         row: row
       }
     case RIGHT:
-      if (checkBorder(state.position, RIGHT) && !check_cell(state.grid, state.position, RIGHT))
+      if (checkBorder(state.position, RIGHT) && !check_cell(state.grid, state.position, RIGHT, state.dead_grid))
         position = moveTetri(state.position, 1)
       else
         position = state.position
@@ -160,7 +169,7 @@ const reducer = (state = {} , action) => {
         position: position
       }
     case LEFT:
-      if (checkBorder(state.position, LEFT) && !check_cell(state.grid, state.position, LEFT))
+      if (checkBorder(state.position, LEFT) && !check_cell(state.grid, state.position, LEFT, state.dead_grid))
         position = moveTetri(state.position, -1)
       else
         position = state.position

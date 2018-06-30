@@ -33,5 +33,3 @@ ReactDom.render((
 store.subscribe(()=>{
   console.log('new client state', store.getState());
 });
-
-// store.dispatch(alert('Soon, will be here a fantastic Tetris ...'))

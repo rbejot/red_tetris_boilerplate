@@ -1,7 +1,14 @@
-export const addMalus = (grid, malus) => {
-  grid.map(e => {
-    grid[e] -= malus * 10
-  })
+export const addMalus = (grid, malus, color_grid, dead_grid) => {
+  if (grid.length !== 0) {
+    for (var i = 0; i < grid.length; i++) {
+      grid[i] -= malus * 10
+      color_grid[grid[i]] = color_grid[grid[i] + malus * 10]
+    }
+  }
+  let dead_length = 199 - dead_grid.length
+  for (var i = dead_length; i > dead_length - malus * 10; i--) {
+    dead_grid.push(i)
+  }
 }
 
 export const checkMalus = (new_grid, old) => {
@@ -56,7 +63,7 @@ export const saveColor = (grid, positions, color, tetri_grid, old_grid) => {
   })
   tetri_grid.map((tetri) => {
     if (!grid[tetri])
-      grid[tetri] = grid[tetri - 10]
+      grid[tetri] = grid[tetri - 10] || grid[tetri + 1] || grid[tetri - 1]
   })
   return grid
 }
