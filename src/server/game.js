@@ -34,8 +34,9 @@ export class Game {
       var p2 = ROOMS_INFO[room].master == username ? ROOMS_INFO[room].player_2 : ROOMS_INFO[room].master
       var malus_p2 = action.malus
       var grid_p2 = action.grid
+      var dead = action.dead
       player.updateUserMalus(p2, malus_p2)
-      socket.to(room).emit('action', {type: 'tetri_pose_p2', malus_p2: malus_p2, grid_p2: grid_p2});
+      socket.to(room).emit('action', {type: 'tetri_pose_p2', malus_p2: malus_p2, grid_p2: grid_p2, dead_p2: dead});
       var i = player.updateUserIndex(username)
       if (i >= ROOMS_INFO[room].pieces.length -1) {
         var list = this.piece.generateList()

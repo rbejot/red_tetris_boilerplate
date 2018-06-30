@@ -61,11 +61,12 @@ export const move = (key) => {
 }
 
 //TODO: Récupèration côté serveur
-export const tetri_pose = (player, malus, grid) => ({
+export const tetri_pose = (player, malus, grid, dead) => ({
   type: TETRI_POSE,
   player: player,
   malus: malus,
-  grid: grid
+  grid: grid,
+  dead: dead
 })
 
 export const new_tetri = (tetri, position) => ({

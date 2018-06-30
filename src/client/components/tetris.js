@@ -26,11 +26,17 @@ const Tetris = ({props, actions, state}) => {
   }
 
   const shadow = (grid) => {
-    // for (var i = 0; i < state.dead_grid.length; i++) {
-    //   if (grid.indexOf(state.dead_grid[i]) === -1)
-    //     grid.push(state.dead_grid[i])
-    // }
-    return grid
+    let spectre = [...grid]
+    for (var i = 0; i < 10; i++) {
+      for (var j = i; j <= i + 190; j += 10) {
+        if (spectre.indexOf(j) > -1) {
+          for (var k = j; k <= i + 190; k += 10) {
+            spectre.push(k)
+          }
+        }
+      }
+    }
+    return spectre
   }
 
   const colorGrid = (index) => {
@@ -49,7 +55,7 @@ const Tetris = ({props, actions, state}) => {
   }
 
   const spectreOccupied = (cell) => {
-    if (state.grid_p2 && state.grid_p2.indexOf(cell) > -1)
+    if (state.grid_p2 && state.grid_p2.indexOf(cell) > -1 || state.dead_p2 && state.dead_p2.indexOf(cell) > -1 )
       return "black"
     return "none"
   }
@@ -93,7 +99,7 @@ const Tetris = ({props, actions, state}) => {
             actions.move("down")
           else if (state.tetri_pose) {
             let spectre = shadow(state.grid) 
-            actions.tetri_pose(state.player, state.malus_to_p2, spectre)
+            actions.tetri_pose(state.player, state.malus_to_p2, spectre, state.dead_grid)
           }
         }}/>
       <TetrisBoard/>

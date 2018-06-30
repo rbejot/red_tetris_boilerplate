@@ -70,9 +70,10 @@ const reducer = (state = {} , action) => {
       if (action.malus_p2 > 0)
         addMalus(state.grid, action.malus_p2, state.color_grid, state.dead_grid)
       return {
-        ...state,
+        ...state, 
         dead_grid: state.dead_grid,
-        grid_p2: action.grid_p2
+        grid_p2: action.grid_p2,
+        dead_p2: action.dead_p2
       }
     case 'start': 
       return {
