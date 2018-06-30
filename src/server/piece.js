@@ -41,11 +41,11 @@ export class Piece {
           position = [3, 4, 14, 15]
           break
       }
-      if (malus && malus >= 0) {
-        for (var i = 0; i < 4; i++) {
-          position[i] += (malus * 10)
-        }
-      }
+      // if (malus && malus >= 0) {
+      //   for (var i = 0; i < 4; i++) {
+      //     position[i] += (malus * 10)
+      //   }
+      // }
       return position
     } else {
       logerror('Error while getting tetri position')
