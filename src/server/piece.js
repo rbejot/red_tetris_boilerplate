@@ -15,7 +15,7 @@ export class Piece {
     return list
   }
 
-  getTetriPos(tetri, malus) {
+  getTetriPos(tetri) {
     if (tetri) {
       var position = []
       switch (tetri) {
@@ -41,11 +41,6 @@ export class Piece {
           position = [3, 4, 14, 15]
           break
       }
-      // if (malus && malus >= 0) {
-      //   for (var i = 0; i < 4; i++) {
-      //     position[i] += (malus * 10)
-      //   }
-      // }
       return position
     } else {
       logerror('Error while getting tetri position')

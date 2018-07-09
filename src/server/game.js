@@ -9,24 +9,29 @@ export class Game {
 
   startGame(socket, room){
     if (ROOMS_INFO[room]) {
+      console.log("start game")
       var master = ROOMS_INFO[room].master
       var player2 = ROOMS_INFO[room].player_2
       if (USERS_INFO && USERS_INFO[master] && USERS_INFO[player2]) {
         USERS_INFO[master].piece = 0
         USERS_INFO[player2].piece = 0
+        USERS_INFO[master].malus = 0
+        USERS_INFO[player2].malus = 0
       }
       ROOMS_INFO[room].gameStarted = true
       ROOMS_INFO[room].gameOver = false
+      if (ROOMS_INFO[room].pieces.length > 0) {
+        ROOMS_INFO[room].pieces.length = 0
+      }
       ROOMS_INFO[room].pieces = this.piece.generateList()
       var tetri = ROOMS_INFO[room].pieces[0]
-      var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0], 0)
+      var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0])
       var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[0])
       io.in(room).emit('action', {type: 'start', pos: pos, color: "#" + color, tetri: tetri})
       socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     } else {
       logerror("Couldn't start game")
     }
-
   }
 
   newTetri(socket, action) {
@@ -46,7 +51,7 @@ export class Game {
       }
       var malus = USERS_INFO[username].malus
       var tetri = ROOMS_INFO[room].pieces[i]
-      var pos = this.piece.getTetriPos(tetri, malus)
+      var pos = this.piece.getTetriPos(tetri)
       var color = this.piece.getTetriColor(tetri)
       console.log("USER", username, malus, tetri, pos, color)
       socket.emit('action', {type: 'new_tetri', pos: pos, color: "#" + color, tetri: tetri})
@@ -57,7 +62,6 @@ export class Game {
 
   gameOver(socket) {
     var room = socket.room
-    var user = socket.username
     if (room && ROOMS_INFO[room]) {
       ROOMS_INFO[room].gameOver = true
       ROOMS_INFO[room].gameStarted = false
