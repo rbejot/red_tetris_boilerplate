@@ -5,24 +5,13 @@ import expect from 'expect'
 
 const color_grid = new Array(200)
 
-describe('Player reducers', () => {
+describe('Player reducers : ', () => {
   it('should START a game', () => {
     expect(
       reducer([], {
         type: types.START
       })
-    ).toEqual({
-      position: [4, 5, 14, 15],
-      tetri: "O",
-      rotate: 1,
-      row: 0,
-      grid: [],
-      color_grid: {},
-      start: true,
-      gameover: false,
-      tetri_nb: 0,
-      color: "red"
-    })
+    ).toEqual([])
   })
 
   it('User can not join room', () => {
@@ -42,8 +31,17 @@ describe('Player reducers', () => {
         player_2: 'pseudo2'
       })
     ).toEqual({
-      p2: 'pseudo2',
-      full: true
+      "color_grid": [],
+      "dead_grid": [],
+      "dead_p2": [],
+      "full": true,
+      "gameover": false,
+      "grid": [],
+      "grid_p2": [],
+      "p2": "pseudo2",
+      "position": [],
+      "start": false,
+      "win": false
     })
   })
 
@@ -175,22 +173,6 @@ describe("Tetris reducers", () => {
     ).toEqual({
       position: [5, 6, 15, 16],
       grid: []
-    })
-  })
-
-  it('user move DOWN', () => {
-    expect(
-      reducer({
-        position: [4, 5, 14, 15],
-        grid: [],
-        row: 0
-      }, {
-        type: types.DOWN
-      })
-    ).toEqual({
-      position: [14, 15, 24, 25],
-      grid: [],
-      row: 1
     })
   })
 

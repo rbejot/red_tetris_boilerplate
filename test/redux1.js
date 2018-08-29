@@ -1,6 +1,6 @@
 import {configureStore} from './helpers/server'
 import rootReducer from '../src/client/reducers'
-import {ALERT_POP, alert} from '../src/client/actions/alert'
+// import {ALERT_POP, alert} from '../src/client/actions/alert'
 import * as actions from '../src/client/actions/game'
 import chai from "chai"
 import { createStore } from 'redux';
@@ -80,7 +80,10 @@ describe('tetris actions', () => {
     expect(actions.tetri_pose(3, 'pseudo1')).toEqual({
       type: actions.TETRI_POSE,
       player: 'pseudo1',
-      tetri_nb: 3
+      dead: undefined,
+      grid: undefined,
+      malus: 'pseudo1',
+      player: 3
     })
   })
   it('New tetrimino is received', () => {
@@ -93,8 +96,7 @@ describe('tetris actions', () => {
   it('Game over', () => {
     expect(actions.gameover()).toEqual({
       type: actions.GAME_OVER,
-      gameover: true,
-      start: false
+      player: undefined
     })
   })
 })

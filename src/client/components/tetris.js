@@ -3,26 +3,30 @@ import ReactInterval from 'react-interval'
 import { start, gameover } from '../actions/game';
 
 const Tetris = ({props, actions, state}) => {
+  const contentStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  }
+
   const boardStyle = {
     width: '300px',
     height: '600px',
-    margin: 'auto',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    border: '10px solid black',
-    borderRadius: '10px'
+    border: '1px solid #000000',
+    boxShadow: '1px 1px 11px 4px #000000'
   }
 
   const spectreStyle = {
     width: '100px',
     height: '200px',
-    margin: 'auto',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    border: '3px solid black',
-    borderRadius: '3px'
+    border: '1px solid #000000',
+    boxShadow: '1px 1px 11px 4px #000000'
   }
 
   const shadow = (grid) => {
@@ -93,9 +97,9 @@ const Tetris = ({props, actions, state}) => {
   }
 
   return (
-    <div>
+    <div style={contentStyle}>
       <ReactInterval timeout={500} enabled={state.start} callback={function() {
-          if (!state.tetri_pose && !state.gameover && !state.win)
+          if (!state.tetri_pose && !state.gameover && !state.win && state.start)
             actions.move("down")
           else if (state.tetri_pose) {
             let spectre = shadow(state.grid) 

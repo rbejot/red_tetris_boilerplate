@@ -8,8 +8,6 @@ import Home from '../components/home'
 import Error from '../components/error'
 import { HashRouter, Route, Redirect, Switch } from 'react-router-dom'
 
-// GET_ROOM pour creer liste de room possible
-
 const App = ({state, actions}) => {
   return (
     <HashRouter hashType="noslash">

@@ -3,22 +3,43 @@ import { Redirect } from 'react-router-dom'
 import Tetris from './tetris'
 
 const Board = ({props, actions, state}) => {
+    const infoStyle = {
+      margin: "auto",
+      width: "350px",
+      height: "100px",
+      backgroundColor: "black",
+      textAlign: "center",
+      lineHeight: "100px",
+      cursor: 'pointer'
+    }
+
     const GameOver = () => {
       actions.gameover(state.player)
-      return <div>Game Over</div>
+      return <div style={{position: "absolute", textAlign: "center", top: "100px", width: "100%", height: "50px", lineHeight: "50px", backgroundColor: "black"}}>Game Over</div>
+    }
+
+    const Win = () => {
+      return <div style={{position: "absolute", textAlign: "center", top: "100px", width: "100%", height: "50px", lineHeight: "50px", backgroundColor: "black"}}>Winner !</div>
+    }
+
+    const Leave = () => {
+      return <div style={{position: "absolute", textAlign: "center", top: "50px", width: "100%", height: "30px", lineHeight: "30px", backgroundColor: "black"}}>Player 2 left the game</div>
     }
 
     const Start = () => {
+      let ret = ""
       if (!state.start && state.master || state.win && state.master)
-        return <h2>Start the game ? <span onClick={() => actions.start()}>GO</span></h2>
+        ret = <h2 style={infoStyle} onClick={() => actions.start()}>Start</h2>
       else if (!state.start || state.win)
-        return <h2>Waiting for master player...</h2>
+        ret = <h2 style={infoStyle}>Waiting for master player...</h2>
       else
-        return <h2>GO !</h2>
+        ret = <h2></h2>
+      return <div style={{width: "100%", position: "absolute", marginTop: "-250px", height: "50px"}}>{ret}</div>
     }
 
     return (
-      <div style={{ position: "absolute", width:"100%", outline:"none"}} tabIndex="0" onKeyDown={(event) => {
+      <div style={{ position: "absolute", top: "0", left: "0", width:"100%", height:"100%", overflowX: "hidden", overflowY: "hidden", outline:"none", display:"flex", flexDirection: "column", justifyContent: "center"}}
+       tabIndex="0" onKeyDown={(event) => {
         if (state.start && !state.gameover && !state.win) {
           if (event.key === "ArrowRight")
           actions.move("right")
@@ -34,23 +55,25 @@ const Board = ({props, actions, state}) => {
           return
         }
       }}>
-        <p>ROOM: {props.match.params.room}</p>
-        <p>PLAYER : {props.match.params.player}</p>
+      <div style={{width: "100%", backgroundColor: "black", height: "30px", lineHeight: "0px", margin: "0", display: "flex", flexDirection: "row", position: "absolute", top: "0", justifyContent: "space-between"}}>
+        <p>{props.match.params.room}</p>
+        <p>{props.match.params.player}</p>
         {state.master ? (
-          <p>Player_2: {state.p2 ? state.p2 : ""}</p>
+          <p>{state.p2 ? "Versus - " + state.p2 : "No opponent yet"}</p>
         ) : (
-          <p>Player_2: {state.master_name}[master]</p>
+          <p>{"Versus - " + state.master_name}[master]</p>
         )}
-        <p>Master: {state.master.toString()}</p>
-        <p>Start: {state.start.toString()}</p>
-        <p>Full: {state.full.toString()}</p>
+        {state.master ? <p> You're the Master </p> : ""}
+        {state.start ? <p>playing</p> : <p>waiting for master</p>}
+        <p>{state.full ? "2/2" : "1/2"}</p>
+      </div>
+      {state.gameover ? <GameOver/> : ""}
+      {state.win ? <Win/> : ""}
+      {state.leave ? <Leave/> : ""}
         <Start/>
         <Tetris props={props} actions={actions} state={state}/>
         <div>
         </div>
-        {state.gameover ? <GameOver/> : ""}
-        {state.win ? <h1>You won !</h1> : ""}
-        {state.leave ? <h1>Player 2 left the game</h1> : ""}
       </div>
     )
 }

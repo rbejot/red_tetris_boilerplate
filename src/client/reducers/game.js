@@ -1,4 +1,4 @@
-import { ALERT_POP } from '../actions/alert'
+// import { ALERT_POP } from '../actions/alert'
 import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start, tetri_pose } from '../actions/game'
 import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate, saveColor, checkMalus, addMalus } from './tetris'
 
@@ -90,6 +90,7 @@ const reducer = (state = {} , action) => {
         gameover: false,
         win: false,
         grid_p2: [],
+        dead_p2: [],
         color: action.color
       }
     case 'new_tetri':
@@ -178,8 +179,8 @@ const reducer = (state = {} , action) => {
         ...state,
         position: position
       }
-    case ALERT_POP:
-      return state
+    // case ALERT_POP:
+    //   return state
     case ERR_USERNAME:
       return {
         ...state,
@@ -251,7 +252,16 @@ const reducer = (state = {} , action) => {
       return {
         ...state,
         p2: action.player_2,
-        full: true
+        full: true,
+        gameover: false,
+        win: false,
+        dead_grid: [],
+        color_grid: [],
+        grid_p2: [],
+        dead_p2: [],
+        grid: [],
+        start: false,
+        position: []
       }
     case 'reject':
       return {

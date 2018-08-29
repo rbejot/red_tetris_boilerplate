@@ -60,7 +60,6 @@ export const move = (key) => {
   }
 }
 
-//TODO: Récupèration côté serveur
 export const tetri_pose = (player, malus, grid, dead) => ({
   type: TETRI_POSE,
   player: player,
