@@ -27,7 +27,7 @@ export class Game {
       var tetri = ROOMS_INFO[room].pieces[0]
       var pos = this.piece.getTetriPos(ROOMS_INFO[room].pieces[0])
       var color = this.piece.getTetriColor(ROOMS_INFO[room].pieces[0])
-      io.in(room).emit('action', {type: 'start', pos: pos, color: "#" + color, tetri: tetri})
+      io.in(room).emit('action', {type: 'start', pos: pos, color: "#" + color, tetri: tetri, next_tetri: this.piece.getTetriPos(ROOMS_INFO[room].pieces[1])})
       socket.broadcast.emit('action', {type: 'update_list', rooms: ROOMS_INFO})
     } else {
       logerror("Couldn't start game")
@@ -54,7 +54,7 @@ export class Game {
       var pos = this.piece.getTetriPos(tetri)
       var color = this.piece.getTetriColor(tetri)
       console.log("USER", username, malus, tetri, pos, color)
-      socket.emit('action', {type: 'new_tetri', pos: pos, color: "#" + color, tetri: tetri})
+      socket.emit('action', {type: 'new_tetri', pos: pos, color: "#" + color, tetri: tetri, next_tetri: this.piece.getTetriPos(ROOMS_INFO[room].pieces[i + 1])})
     } else {
       logerror('Error while sending new tetriminos')
     }

@@ -12,6 +12,12 @@ export const START = 'server/start_game'
 export const NEW_TETRI = 'new_tetri'
 export const GAME_OVER = 'server/game_over'
 export const TETRI_POSE = 'server/tetri_pose'
+export const ADD_SCORE = 'add_score'
+
+export const add_score = (lines) => ({
+  type: ADD_SCORE,
+  score: lines
+})
 
 export const create_room = (room, player) => ({
   type: CREATE_ROOM,

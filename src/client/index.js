@@ -6,10 +6,8 @@ import { createStore, applyMiddleware } from 'redux'
 import createSocketIoMiddleware from 'redux-socket.io'
 import io from 'socket.io-client';
 import { Provider } from 'react-redux'                                                                                                                                                    
-// import { storeStateMiddleWare } from './middleware/storeStateMiddleWare'
 import reducer from './reducers'
 import App from './containers/app'
-// import { alert } from './actions/alert'
 import { server } from '../../params'
 
 

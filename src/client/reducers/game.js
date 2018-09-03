@@ -1,5 +1,5 @@
 // import { ALERT_POP } from '../actions/alert'
-import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start, tetri_pose } from '../actions/game'
+import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start, tetri_pose, ADD_SCORE} from '../actions/game'
 import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate, saveColor, checkMalus, addMalus } from './tetris'
 
 const jumpTetri = (grid, pos, dead_grid) => {
@@ -65,6 +65,7 @@ const reducer = (state = {} , action) => {
   let rotate = 0
   let color = []
   let malus = 0
+  let next = []
   switch(action.type){
     case 'tetri_pose_p2':
       if (action.malus_p2 > 0)
@@ -89,8 +90,10 @@ const reducer = (state = {} , action) => {
         start: true,
         gameover: false,
         win: false,
+        score: 0,
         grid_p2: [],
         dead_p2: [],
+        next_tetri: action.next_tetri,
         color: action.color
       }
     case 'new_tetri':
@@ -101,6 +104,7 @@ const reducer = (state = {} , action) => {
         color: action.color,
         rotate: 1,
         row: 0,
+        next_tetri: action.next_tetri,
         tetri_pose: false
       }
     case JUMP:
@@ -200,6 +204,7 @@ const reducer = (state = {} , action) => {
     case 'game_over':
       return {
         ...state,
+        next_tetri: [],
         win: true
       }
     case 'not_created':
@@ -267,6 +272,11 @@ const reducer = (state = {} , action) => {
       return {
         ...state,
         reject: true
+      }
+    case ADD_SCORE:
+      return {
+        ...state,
+        score: state.score + action.score * 10
       }
     default: 
       return state

@@ -18,7 +18,7 @@ const App = ({state, actions}) => {
         )}/>
         <Route exact path="/:room[:player]" render={(props) => (
           state.party ? (
-            <Board props={props} actions={actions} state={state}/> 
+            <Board props={props} actions={actions} state={state} redirect={Redirect}/>
           ) : (
             <Redirect to="/"/>
           )

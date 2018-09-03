@@ -30,7 +30,7 @@ const PseudoForm = ({actions}) => {
 
   return (
     <div style={pseudoFormStyle}>
-      <div style={{display:'flex', width: '120px', height: '120px', position: 'absolute', flexDirection: 'row', flexWrap: 'wrap', top: '5', left: '5'}}>
+      <div style={{display:'flex', width: '120px', height: '120px', position: 'absolute', flexDirection: 'row', flexWrap: 'wrap', top: '5px', left: '5px'}}>
         <div style={{width: '60px', height: '60px', backgroundColor: '#00b8ff'}}>
         </div>
         <div style={{width: '60px', height: '60px', backgroundColor: 'transparent'}}>
