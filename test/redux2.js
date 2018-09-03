@@ -148,6 +148,26 @@ describe('Player reducers : ', () => {
 })
 
 describe("Tetris reducers", () => {
+  it('add maluse to p2', () => {
+    expect(
+      reducer({
+        grid: [],
+        malus_p2: 1,
+        color_grid: [],
+        dead_grid: []
+      }, {
+        type: 'tetri_pose_p2'
+      })
+    ).toEqual({
+      "color_grid": [],
+      "dead_grid": [],
+      "dead_p2": undefined,
+      "grid": [],
+      "grid_p2": undefined,
+      "malus_p2": 1
+    })
+  })
+
   it('user move LEFT', () => {
     expect(
       reducer({
@@ -190,6 +210,89 @@ describe("Tetris reducers", () => {
       grid: [],
       rotate: 0,
       tetri: "O"
+    })
+  })
+
+  it('user move UP', () => {
+    expect(
+      reducer({
+        position: [4, 5, 6, 7],
+        grid: [],
+        rotate: 1,
+        tetri: "L"
+      }, {
+        type: types.UP
+      })
+    ).toEqual({
+      position: [-5, 5, 15, 27],
+      grid: [],
+      rotate: 2,
+      tetri: "L"
+    })
+  })
+
+  it('user JUMP', () => {
+    expect(
+      reducer({
+        position: [4, 5, 6, 7],
+        dead_grid: [],
+        grid: [],
+        rotate: 1,
+        tetri: "L",
+        color_grid: []
+      }, {
+        type: types.JUMP
+      })
+    ).toEqual({
+      "color_grid": [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+      "dead_grid": [],
+      "grid": [194, 195, 196, 197],
+      "malus_to_p2": 0,
+      "position": [194, 195, 196, 197],
+      "rotate": 1,
+      "tetri": "L",
+      "tetri_pose": true
+    })
+  })
+
+  it('user move DOWN', () => {
+    expect(
+      reducer({
+        row: 18,
+        position: [4, 5, 6, 7],
+        grid: [],
+        dead_grid: [],
+
+      }, {
+        type: types.DOWN
+      })
+    ).toEqual({
+      dead_grid: [],
+      grid: [],
+      position: [14, 15, 16, 17],
+      row: 19
+    })
+  })
+
+  it('user move DOWN', () => {
+    expect(
+      reducer({
+        row: 19,
+        position: [4, 5, 6, 7],
+        grid: [],
+        dead_grid: [],
+        color_grid: []
+      }, {
+        type: types.DOWN
+      })
+    ).toEqual({
+      "color_grid": [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+      "dead_grid": [],
+      "grid": [4, 5, 6, 7],
+      "malus_to_p2": 0,
+      "position": [4, 5, 6, 7],
+      "row": 19,
+      "tetri_pose": true
     })
   })
 })

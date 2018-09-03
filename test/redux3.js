@@ -186,4 +186,20 @@ describe('Test tetris function', () => {
   it('should check if tetrimino can rotate at the border', () => {
     expect(tetris.checkRotCell([], [4, 14, 24, 25], 3, 4, 5, 6)).toEqual(true)
   })
+
+  it('should check if color exist', () => {
+    expect(tetris.saveColor([6, 8, 9], [], "black", [6, 8, 9], [3, 4, 5])).toEqual([6, 8, 9, undefined, undefined, undefined, undefined, undefined, undefined, undefined])
+  })
+
+  it('should check the malus', () => {
+    expect(tetris.addMalus([1], 0, [], [])).toEqual(undefined)
+  })
+
+  it('should check rotation', () => {
+    expect(tetris.checkRotCell([1], [200, 200, 200, 200], 10, 10, 10, 10)).toEqual(false)
+  })
+
+  it('should check rotation', () => {
+    expect(tetris.checkRotCell([100], [0, 0, 0, 100], 0, 0, 0, 0)).toEqual(false)
+  })
 })
