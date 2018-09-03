@@ -1,7 +1,8 @@
 import fs  from 'fs'
 import debug from 'debug'
+import {initEngine} from './socket'
 
-const logerror = debug('tetris:error')
+export const logerror = debug('tetris:error')
   , loginfo = debug('tetris:info')
 
 const initApp = (app, params, cb) => {
@@ -27,22 +28,11 @@ const initApp = (app, params, cb) => {
   })
 }
 
-const initEngine = io => {
-  io.on('connection', function(socket){
-    loginfo("Socket connected: " + socket.id)
-    socket.on('action', (action) => {
-      if(action.type === 'server/ping'){
-        socket.emit('action', {type: 'pong'})
-      }
-    })
-  })
-}
-
 export function create(params){
   const promise = new Promise( (resolve, reject) => {
     const app = require('http').createServer()
     initApp(app, params, () =>{
-      const io = require('socket.io')(app)
+      global.io = require('socket.io')(app)
       const stop = (cb) => {
         io.close()
         app.close( () => {
@@ -51,8 +41,7 @@ export function create(params){
         loginfo(`Engine stopped.`)
         cb()
       }
-
-      initEngine(io)
+      initEngine(loginfo)
       resolve({stop})
     })
   })
