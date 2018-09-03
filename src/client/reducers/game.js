@@ -74,7 +74,8 @@ const reducer = (state = {} , action) => {
         ...state, 
         dead_grid: state.dead_grid,
         grid_p2: action.grid_p2,
-        dead_p2: action.dead_p2
+        dead_p2: action.dead_p2,
+        speed: state.speed - 5 * action.malus_p2
       }
     case 'start': 
       return {
@@ -84,6 +85,7 @@ const reducer = (state = {} , action) => {
         tetri: action.tetri,
         dead_grid: [],
         rotate: 1,
+        speed: 500,
         row: 0,
         grid: [],
         color_grid: {},
@@ -103,6 +105,7 @@ const reducer = (state = {} , action) => {
         position: action.pos,
         color: action.color,
         rotate: 1,
+        speed: state.speed - 5,
         row: 0,
         next_tetri: action.next_tetri,
         tetri_pose: false
@@ -276,7 +279,8 @@ const reducer = (state = {} , action) => {
     case ADD_SCORE:
       return {
         ...state,
-        score: state.score + action.score * 10
+        score: state.score + action.score * 10,
+        speed: state.speed + action.score * 5
       }
     default: 
       return state

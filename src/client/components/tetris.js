@@ -128,7 +128,7 @@ const Tetris = ({props, actions, state}) => {
 
   return (
     <div style={contentStyle}>
-      <ReactInterval timeout={500} enabled={state.start} callback={function() {
+      <ReactInterval timeout={state.speed} enabled={state.start} callback={function() {
           if (!state.tetri_pose && !state.gameover && !state.win && state.start)
             actions.move("down")
           else if (state.tetri_pose) {
@@ -139,6 +139,7 @@ const Tetris = ({props, actions, state}) => {
         }}/>
       <TetrisBoard state={state}/>
       <Spectre/>
+      {/* <h2>{state.speed}</h2> */}
     </div>
   )
 }
