@@ -1,13 +1,10 @@
 import {configureStore} from './helpers/server'
 import rootReducer from '../src/client/reducers'
-// import {ALERT_POP, alert} from '../src/client/actions/alert'
 import * as actions from '../src/client/actions/game'
 import chai from "chai"
 import { createStore } from 'redux';
 import expect from 'expect'
 
-
-//Actions test
 describe('user actions', () => {
   it('add_username if valid and not taken', () => {
     expect(actions.add_username('pseudo1')).toEqual({

@@ -1,4 +1,3 @@
-// import { ALERT_POP } from '../actions/alert'
 import { CREATE_ROOM, ADD_USERNAME, ERR_USERNAME, RIGHT, LEFT, DOWN, START, UP, JUMP, NEW_TETRI, start, tetri_pose, ADD_SCORE} from '../actions/game'
 import { getRow, moveTetri, saveTetri, newRotation, rotateTetri, checkRotCell, checkRotate, saveColor, checkMalus, addMalus } from './tetris'
 
@@ -186,8 +185,6 @@ const reducer = (state = {} , action) => {
         ...state,
         position: position
       }
-    // case ALERT_POP:
-    //   return state
     case ERR_USERNAME:
       return {
         ...state,

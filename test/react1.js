@@ -1,6 +1,5 @@
 import chai from "chai"
 import React from 'react'
-// import equalJSX from 'chai-equal-jsx'
 import {createRenderer} from 'react-addons-test-utils'
 import {App} from '../src/client/containers/app'
 import Board from '../src/client/components/board'
@@ -15,7 +14,6 @@ import * as board from '../src/client/components/board'
 import expect from 'expect'
 
 chai.should()
-// chai.use(equalJSX)
 
 describe('Board test', () => {
   it('should render a div', () => {
